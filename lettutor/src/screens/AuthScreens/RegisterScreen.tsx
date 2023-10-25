@@ -7,6 +7,7 @@ import Input from "../../components/Input";
 import lettutor2 from "../../assets/logo/lettutor2.png";
 import facebookLogo from "../../assets/logo/facebook.png";
 import googleLogo from "../../assets/logo/google.png";
+import COLORS from "../../constants/Colors";
 const RegisterScreen = () => {
     const [open, setOpen] = useState(false);
     const [languageValue, setLanguageValue] = useState("vi");
@@ -90,7 +91,7 @@ const RegisterScreen = () => {
                     </Text>
                 </Pressable>
                 <Text>Or continue with</Text>
-                <View style={{ flexDirection: "row", gap: 10 }}>
+                <View style={{ flexDirection: "row", gap: 40 }}>
                     <Pressable onPress={handleFacebookLogin}>
                         <Image
                             style={{ width: 40, height: 40 }}
@@ -115,7 +116,7 @@ const RegisterScreen = () => {
                     <Pressable onPress={handleLoginClick}>
                         <Text
                             style={{
-                                color: "blue",
+                                color: COLORS.secondary,
                                 fontWeight: "600",
                                 fontSize: 16,
                             }}
@@ -145,7 +146,7 @@ const styles = StyleSheet.create({
         alignSelf: "flex-end",
     },
     buttonRegister: {
-        backgroundColor: "#f1c40f",
+        backgroundColor: COLORS.primary,
         padding: 10,
         width: "100%",
         alignItems: "center",

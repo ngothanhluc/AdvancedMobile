@@ -7,6 +7,7 @@ import Input from "../../components/Input";
 import lettutor2 from "../../assets/logo/lettutor2.png";
 import facebookLogo from "../../assets/logo/facebook.png";
 import googleLogo from "../../assets/logo/google.png";
+import COLORS from "../../constants/Colors";
 const LoginScreen = () => {
     const [open, setOpen] = useState(false);
     const [languageValue, setLanguageValue] = useState("vi");
@@ -18,7 +19,7 @@ const LoginScreen = () => {
     const [password, setPassword] = useState("");
     const navigation = useNavigation();
     const handleLoginButtonClick = () => {
-        navigation.navigate("Register");
+        navigation.navigate("Home");
     };
     const handleForgotPasswordClick = () => {
         console.log("Forgot Password");
@@ -86,7 +87,7 @@ const LoginScreen = () => {
                 <Pressable onPress={handleForgotPasswordClick}>
                     <Text
                         style={{
-                            color: "blue",
+                            color: COLORS.secondary,
                             fontWeight: "600",
                             fontSize: 16,
                         }}
@@ -113,14 +114,14 @@ const LoginScreen = () => {
                     style={{
                         flexDirection: "row",
                         alignItems: "center",
-                        gap: 10,
+                        gap: 20,
                     }}
                 >
                     <Text>Not a member yet?</Text>
                     <Pressable onPress={handleRegisterClick}>
                         <Text
                             style={{
-                                color: "blue",
+                                color: COLORS.secondary,
                                 fontWeight: "600",
                                 fontSize: 16,
                             }}
@@ -150,7 +151,7 @@ const styles = StyleSheet.create({
         alignSelf: "flex-end",
     },
     buttonLogin: {
-        backgroundColor: "#f1c40f",
+        backgroundColor: COLORS.primary,
         padding: 10,
         width: "100%",
         alignItems: "center",
