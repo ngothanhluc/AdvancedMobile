@@ -2,7 +2,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet } from "react-native";
 import AuthStack from "./src/Stack/AuthStack";
-import TabStack from "./src/Stack/TabStack";
+import BottomTabStack from "./src/Stack/TabStack";
 import { MD3LightTheme, PaperProvider } from "react-native-paper";
 import COLORS from "./src/constants/Colors";
 const theme = {
@@ -21,7 +21,11 @@ export default function App() {
         <PaperProvider theme={theme}>
             <StatusBar style="auto" />
             <NavigationContainer>
-                {user ? <AuthStack></AuthStack> : <TabStack></TabStack>}
+                {user ? (
+                    <AuthStack></AuthStack>
+                ) : (
+                    <BottomTabStack></BottomTabStack>
+                )}
             </NavigationContainer>
         </PaperProvider>
     );

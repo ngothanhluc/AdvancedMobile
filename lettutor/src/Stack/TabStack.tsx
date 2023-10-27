@@ -1,11 +1,15 @@
-import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
+import { createStackNavigator } from "@react-navigation/stack";
+import HistoryScreen from "../screens/MainScreens/HistoryScreen";
 import HomeScreen from "../screens/MainScreens/HomeScreen";
 import ProfileScreen from "../screens/MainScreens/ProfileScreen";
 import TutorDetailScreen from "../screens/MainScreens/TutorDetailScreen";
-import TutorSearchScreen from "../screens/MainScreens/TutorSearchScreen";
 import TutorSearchResultScreen from "../screens/MainScreens/TutorSearchResultScreen";
-const Tab = createBottomTabNavigator();
+import TutorSearchScreen from "../screens/MainScreens/TutorSearchScreen";
+import UpcomingScreen from "../screens/MainScreens/UpcomingScreen";
+const TopTab = createMaterialTopTabNavigator();
+const BottomTab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 const HomeStack = () => {
     return (
@@ -34,12 +38,28 @@ const TutorSearchStack = () => {
         </Stack.Navigator>
     );
 };
-export default function TabStack() {
+const ScheduleStack = () => {
     return (
-        <Tab.Navigator screenOptions={{ headerShown: false }}>
-            <Tab.Screen name="Home Tab" component={HomeStack} />
-            <Tab.Screen name="Tutors Tab" component={TutorSearchStack} />
-            <Tab.Screen name="Profile" component={ProfileScreen} />
-        </Tab.Navigator>
+        <TopTab.Navigator>
+            <TopTab.Screen name="Upcoming" component={UpcomingScreen} />
+            <TopTab.Screen name="History" component={HistoryScreen} />
+        </TopTab.Navigator>
+    );
+};
+export default function BottomTabStack() {
+    return (
+        <BottomTab.Navigator screenOptions={{ headerShown: false }}>
+            <BottomTab.Screen name="Home Tab" component={HomeStack} />
+            <BottomTab.Screen name="Tutors Tab" component={TutorSearchStack} />
+            <BottomTab.Screen
+                name="Schedule Tab"
+                options={{
+                    headerTitle: "Schedule",
+                    headerShown: true,
+                }}
+                component={ScheduleStack}
+            />
+            <BottomTab.Screen name="Profile Tab" component={ProfileScreen} />
+        </BottomTab.Navigator>
     );
 }

@@ -5,6 +5,7 @@ const SpecialtyTag = (props) => {
     return (
         <View
             style={{
+                alignSelf: "flex-start",
                 paddingHorizontal: 10,
                 paddingVertical: 6,
                 borderWidth: 1,
