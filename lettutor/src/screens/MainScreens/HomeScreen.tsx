@@ -70,11 +70,12 @@ const HomeScreen = () => {
                         <Text style={{ fontSize: 20, fontWeight: "bold" }}>
                             Recommended Tutor
                         </Text>
-                        <TutorCard />
-                        <TutorCard />
-                        <TutorCard />
-                        <TutorCard />
-                        <TutorCard />
+                        <TutorCard bookAble={true} />
+                        <TutorCard bookAble={true} />
+                        <TutorCard bookAble={true} />
+                        <TutorCard bookAble={true} />
+                        <TutorCard bookAble={true} />
+                        <TutorCard bookAble={true} />
                     </View>
                 </View>
             </ScrollView>

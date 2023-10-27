@@ -4,8 +4,11 @@ import tutorAvatar from "../assets/tutor/keegan-avatar.png";
 import Rate from "./Rate";
 import { AntDesign } from "@expo/vector-icons";
 import COLORS from "../constants/Colors";
-const TutorCard = () => {
+import { useNavigation } from "@react-navigation/native";
+import SpecialtyTag from "./SpecialtyTag";
+const TutorCard = (props) => {
     const [rating, setRating] = useState(5);
+    const navigator = useNavigation();
     const specialties =
         "business-english,conversational-english,english-for-kids,ielts,starters,movers,flyers,ket,pet,toefl,toeic";
     const specialtiesArray = specialties.split(",");
@@ -15,7 +18,7 @@ const TutorCard = () => {
         setRating(rating);
     };
     const handleBookClick = () => {
-        console.log("Book");
+        navigator.navigate("Tutor Detail");
     };
 
     return (
@@ -82,44 +85,33 @@ const TutorCard = () => {
 
             <View style={{ flexDirection: "row", flexWrap: "wrap", gap: 10 }}>
                 {specialtiesArray.map((specialty, index) => {
-                    return (
-                        <View
-                            style={{
-                                paddingHorizontal: 10,
-                                paddingVertical: 6,
-                                borderWidth: 1,
-                                borderRadius: 12,
-                                borderColor: COLORS.primary,
-                            }}
-                            key={index}
-                        >
-                            <Text>{specialty}</Text>
-                        </View>
-                    );
+                    return <SpecialtyTag specialty={specialty} key={index} />;
                 })}
             </View>
             <Text>{bio}</Text>
-            <Pressable
-                onPress={handleBookClick}
-                style={{
-                    alignSelf: "flex-end",
-                    backgroundColor: COLORS.secondary,
-                    borderRadius: 12,
-                }}
-            >
-                <View
+            {props.bookAble && (
+                <Pressable
+                    onPress={handleBookClick}
                     style={{
-                        flexDirection: "row",
-                        alignItems: "center",
-                        gap: 10,
-                        paddingHorizontal: 20,
-                        paddingVertical: 10,
+                        alignSelf: "flex-end",
+                        backgroundColor: COLORS.secondary,
+                        borderRadius: 12,
                     }}
                 >
-                    <AntDesign name="calendar" size={24} color="white" />
-                    <Text style={{ color: "white" }}>Book</Text>
-                </View>
-            </Pressable>
+                    <View
+                        style={{
+                            flexDirection: "row",
+                            alignItems: "center",
+                            gap: 10,
+                            paddingHorizontal: 20,
+                            paddingVertical: 10,
+                        }}
+                    >
+                        <AntDesign name="calendar" size={24} color="white" />
+                        <Text style={{ color: "white" }}>Book</Text>
+                    </View>
+                </Pressable>
+            )}
         </View>
     );
 };

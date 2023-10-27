@@ -1,21 +1,29 @@
-import { StatusBar } from "expo-status-bar";
-import { SafeAreaView, StyleSheet, Text, View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack";
-import TutorDetailScreen from "./src/screens/MainScreens/TutorDetailScreen";
+import { StatusBar } from "expo-status-bar";
+import { StyleSheet } from "react-native";
 import AuthStack from "./src/Stack/AuthStack";
 import TabStack from "./src/Stack/TabStack";
-const Stack = createStackNavigator();
-
+import { MD3LightTheme, PaperProvider } from "react-native-paper";
+import COLORS from "./src/constants/Colors";
+const theme = {
+    ...MD3LightTheme,
+    colors: {
+        ...MD3LightTheme.colors,
+        primary: COLORS.primary,
+        primaryContainer: COLORS.primaryContainer,
+        secondary: COLORS.secondary,
+        secondaryContainer: COLORS.secondaryContainer,
+    },
+};
 export default function App() {
     const user = null;
     return (
-        <>
+        <PaperProvider theme={theme}>
             <StatusBar style="auto" />
             <NavigationContainer>
                 {user ? <AuthStack></AuthStack> : <TabStack></TabStack>}
             </NavigationContainer>
-        </>
+        </PaperProvider>
     );
 }
 
