@@ -6,6 +6,8 @@ const COLORS = {
     background: "#e6f3fc",
     secondaryContainer: "#e6f3fc",
     darkNeutral: "#2d3436",
+    error: "#d63031",
+    errorContainer: "#f5b7b1",
 };
 
 export default COLORS;
