@@ -4,7 +4,7 @@ import { Card, Button, Avatar, IconButton } from "react-native-paper";
 import tutorAvatar from "../assets/tutor/keegan-avatar.png";
 const UpcomingCard = () => {
     return (
-        <Card style={{ padding: 10 }}>
+        <Card style={{ padding: 10, backgroundColor: "#fff" }}>
             <Card.Title
                 title={
                     <Text style={{ fontWeight: "bold", fontSize: 20 }}>

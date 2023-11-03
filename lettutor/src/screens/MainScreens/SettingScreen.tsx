@@ -7,13 +7,31 @@ import COLORS from "../../constants/Colors";
 const SettingScreen = () => {
     return (
         <SafeAreaView style={{ flex: 1 }}>
-            <ScrollView style={{ padding: 10, backgroundColor: "#fff" }}>
-                <View style={{ alignSelf: "center", alignItems: "center" }}>
+            <ScrollView style={{ padding: 20, backgroundColor: "#fff" }}>
+                <View
+                    style={{
+                        alignSelf: "center",
+                        alignItems: "center",
+                        marginTop: 20,
+                        gap: 10,
+                    }}
+                >
                     <Avatar.Image
+                        size={100}
                         source={{ uri: "https://picsum.photos/700" }}
                     ></Avatar.Image>
-                    <Text>Ph Hai</Text>
-                    <Button>Edit profile</Button>
+                    <Text style={{ fontSize: 20 }}>Ph Hai</Text>
+                    <Button>
+                        <Text
+                            style={{
+                                fontSize: 20,
+                                padding: 10,
+                                color: COLORS.secondary,
+                            }}
+                        >
+                            Edit profile
+                        </Text>
+                    </Button>
                 </View>
                 <View style={{ gap: 20 }}>
                     <Pressable
@@ -31,7 +49,11 @@ const SettingScreen = () => {
                                 gap: 20,
                             }}
                         >
-                            <Icon source="account-settings" size={40} />
+                            <Icon
+                                source="account-settings"
+                                size={32}
+                                color={COLORS.secondary}
+                            />
                             <Text>Account</Text>
                         </View>
                     </Pressable>
@@ -50,12 +72,17 @@ const SettingScreen = () => {
                                 gap: 20,
                             }}
                         >
-                            <Icon source="account-settings" size={40} />
+                            <Icon
+                                source="earth"
+                                size={32}
+                                color={COLORS.secondary}
+                            />
                             <Text>Language</Text>
                         </View>
                     </Pressable>
                 </View>
                 <Button
+                    style={{ marginVertical: 40 }}
                     mode="elevated"
                     buttonColor={COLORS.errorContainer}
                     textColor={COLORS.error}

@@ -6,14 +6,23 @@ const SpecialtyTag = (props) => {
         <View
             style={{
                 alignSelf: "flex-start",
-                paddingHorizontal: 10,
-                paddingVertical: 6,
+                paddingHorizontal: 12,
+                paddingVertical: 8,
                 borderWidth: 1,
-                borderRadius: 12,
+                backgroundColor: "#fff",
+                borderRadius: 6,
                 borderColor: COLORS.primary,
             }}
         >
-            <Text>{props.specialty}</Text>
+            <Text
+                style={{
+                    fontSize: 14,
+                    color: COLORS.primary,
+                    fontWeight: "bold",
+                }}
+            >
+                {props.specialty}
+            </Text>
         </View>
     );
 };

@@ -21,7 +21,7 @@ export default function App() {
     const user = "null";
     return (
         <PaperProvider theme={theme}>
-            <StatusBar style="auto" />
+            <StatusBar hidden={true} />
             <NavigationContainer>
                 {!user ? (
                     <AuthStack></AuthStack>

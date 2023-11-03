@@ -19,6 +19,7 @@ const TutorSearchScreen = () => {
     for (let i = 0; i < 10; i++) {
         chips.push(
             <Chip
+                style={{ paddingVertical: 6, paddingHorizontal: 10 }}
                 key={i}
                 showSelectedCheck={true}
                 onPress={() => setSelectedChip(i)}
@@ -30,15 +31,23 @@ const TutorSearchScreen = () => {
     }
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: "#ffffff" }}>
-            <View style={{ flexDirection: "column", padding: 10, gap: 20 }}>
+            <View style={{ flexDirection: "column", padding: 20, gap: 20 }}>
                 <View>
-                    <Text style={{ fontSize: 20, fontWeight: "bold" }}>
+                    <Text style={{ fontSize: 24, fontWeight: "bold" }}>
                         Find a tutor
                     </Text>
                     <Searchbar
                         style={{
                             marginVertical: 10,
                             backgroundColor: COLORS.primaryContainer,
+                            shadowColor: "#000",
+                            shadowOffset: {
+                                width: 1,
+                                height: 2,
+                            },
+                            shadowOpacity: 0.25,
+                            shadowRadius: 3.84,
+                            elevation: 5,
                         }}
                         placeholder="Search"
                         value={searchQuery}
@@ -47,7 +56,13 @@ const TutorSearchScreen = () => {
                 </View>
 
                 <View>
-                    <Text style={{ fontSize: 20, fontWeight: "bold" }}>
+                    <Text
+                        style={{
+                            fontSize: 20,
+                            fontWeight: "bold",
+                            marginBottom: 10,
+                        }}
+                    >
                         Nationality
                     </Text>
                     <RadioButton.Group
@@ -61,7 +76,7 @@ const TutorSearchScreen = () => {
                             }}
                         >
                             <RadioButton value="first" />
-                            <Text>First</Text>
+                            <Text style={{ fontSize: 16 }}>Vietnamese</Text>
                         </View>
                         <View
                             style={{
@@ -70,19 +85,25 @@ const TutorSearchScreen = () => {
                             }}
                         >
                             <RadioButton value="second" />
-                            <Text>Second</Text>
+                            <Text style={{ fontSize: 16 }}>Foreign</Text>
                         </View>
                     </RadioButton.Group>
                 </View>
                 <View>
-                    <Text style={{ fontSize: 20, fontWeight: "bold" }}>
+                    <Text
+                        style={{
+                            fontSize: 20,
+                            fontWeight: "bold",
+                            marginBottom: 10,
+                        }}
+                    >
                         Specialties
                     </Text>
                     <View
                         style={{
                             flexDirection: "row",
                             flexWrap: "wrap",
-                            gap: 10,
+                            gap: 14,
                         }}
                     >
                         {chips}

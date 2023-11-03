@@ -12,7 +12,7 @@ const HistoryScreen = () => {
     const closeMenu = () => setVisible(false);
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
-            <ScrollView style={{ padding: 10 }}>
+            <ScrollView style={{ padding: 20 }}>
                 <View style={{ gap: 20 }}>
                     <Text
                         style={{

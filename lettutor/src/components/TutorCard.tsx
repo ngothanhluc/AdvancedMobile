@@ -26,16 +26,24 @@ const TutorCard = (props) => {
             style={{
                 padding: 20,
                 gap: 20,
+                backgroundColor: COLORS.background,
                 borderWidth: 1,
                 borderColor: COLORS.primary,
                 borderRadius: 12,
                 marginVertical: 20,
+                shadowColor: "#000",
+                shadowOffset: {
+                    width: 0,
+                    height: 0,
+                },
+                shadowOpacity: 0.25,
+                shadowRadius: 3.84,
+                elevation: 5,
             }}
         >
             <View
                 style={{
                     flexDirection: "row",
-
                     gap: 20,
                 }}
             >
@@ -64,8 +72,10 @@ const TutorCard = (props) => {
                         justifyContent: "space-between",
                     }}
                 >
-                    <Text>Joan Gacer</Text>
-                    <Text>Taiwan</Text>
+                    <Text style={{ fontSize: 20, fontWeight: "bold" }}>
+                        Joan Gacer
+                    </Text>
+                    <Text style={{ fontSize: 16 }}>Taiwan</Text>
                     <Rate
                         disabled={true}
                         rating={rating}
@@ -88,7 +98,7 @@ const TutorCard = (props) => {
                     return <SpecialtyTag specialty={specialty} key={index} />;
                 })}
             </View>
-            <Text>{bio}</Text>
+            <Text style={{ fontSize: 14, lineHeight: 20 }}>{bio}</Text>
             {props.bookAble && (
                 <Pressable
                     onPress={handleBookClick}

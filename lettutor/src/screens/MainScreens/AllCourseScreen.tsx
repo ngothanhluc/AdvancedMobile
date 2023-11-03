@@ -16,8 +16,8 @@ const AllCourseScreen = () => {
     const onChangeSearch = (query) => setSearchQuery(query);
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
-            <ScrollView style={{ padding: 10 }}>
-                <View style={{ padding: 10, gap: 20 }}>
+            <ScrollView style={{ padding: 20 }}>
+                <View style={{ gap: 10 }}>
                     <Searchbar
                         style={{
                             backgroundColor: COLORS.primaryContainer,
@@ -57,9 +57,11 @@ const AllCourseScreen = () => {
                             <Menu.Item onPress={() => {}} title="3" />
                         </Menu>
                     </View>
-                    <CourseCard />
-                    <CourseCard />
-                    <CourseCard />
+                    <View style={{ padding: 10, gap: 20 }}>
+                        <CourseCard />
+                        <CourseCard />
+                        <CourseCard />
+                    </View>
                 </View>
             </ScrollView>
         </SafeAreaView>

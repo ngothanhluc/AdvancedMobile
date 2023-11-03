@@ -31,7 +31,11 @@ const HomeBottomTab = () => {
 const TutorsBottomTab = () => {
     return (
         <Stack.Navigator>
-            <Stack.Screen name="Tutors Search" component={TutorSearchScreen} />
+            <Stack.Screen
+                options={{ headerShown: false }}
+                name="Tutors Search"
+                component={TutorSearchScreen}
+            />
             <Stack.Screen
                 name="Tutor Search Result"
                 component={TutorSearchResultScreen}
