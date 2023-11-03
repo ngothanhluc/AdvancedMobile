@@ -8,14 +8,17 @@ import TutorDetailScreen from "../screens/MainScreens/TutorDetailScreen";
 import TutorSearchResultScreen from "../screens/MainScreens/TutorSearchResultScreen";
 import TutorSearchScreen from "../screens/MainScreens/TutorSearchScreen";
 import UpcomingScreen from "../screens/MainScreens/UpcomingScreen";
+import AllCourseScreen from "../screens/MainScreens/AllCourseScreen";
+import EBookScreen from "../screens/MainScreens/EBookScreen";
+import CourseDetailsScreen from "../screens/MainScreens/CourseDetailsScreen";
 const TopTab = createMaterialTopTabNavigator();
 const BottomTab = createBottomTabNavigator();
 const Stack = createStackNavigator();
-const HomeStack = () => {
+const HomeBottomTab = () => {
     return (
         <Stack.Navigator>
             <Stack.Screen
-                name="Home"
+                name="HomeScreen"
                 component={HomeScreen}
                 options={{ headerShown: false }}
             />
@@ -23,14 +26,10 @@ const HomeStack = () => {
         </Stack.Navigator>
     );
 };
-const TutorSearchStack = () => {
+const TutorsBottomTab = () => {
     return (
-        <Stack.Navigator>
-            <Stack.Screen
-                options={{ headerTitle: "Tutors" }}
-                name="Tutors Search"
-                component={TutorSearchScreen}
-            />
+        <Stack.Navigator screenOptions={{ headerShown: false }}>
+            <Stack.Screen name="Tutors Search" component={TutorSearchScreen} />
             <Stack.Screen
                 name="Tutor Search Result"
                 component={TutorSearchResultScreen}
@@ -38,7 +37,7 @@ const TutorSearchStack = () => {
         </Stack.Navigator>
     );
 };
-const ScheduleStack = () => {
+const ScheduleBottomTab = () => {
     return (
         <TopTab.Navigator>
             <TopTab.Screen name="Upcoming" component={UpcomingScreen} />
@@ -46,20 +45,62 @@ const ScheduleStack = () => {
         </TopTab.Navigator>
     );
 };
+const CoursesTopTab = () => {
+    return (
+        <TopTab.Navigator>
+            <TopTab.Screen name="All Course" component={AllCourseScreen} />
+            <TopTab.Screen name="E-books" component={EBookScreen} />
+        </TopTab.Navigator>
+    );
+};
+const CourseBottomTab = () => {
+    return (
+        <Stack.Navigator>
+            <Stack.Screen
+                name="Courses"
+                options={{ headerShown: false }}
+                component={CoursesTopTab}
+            />
+            <Stack.Screen
+                name="Course Details"
+                component={CourseDetailsScreen}
+            />
+        </Stack.Navigator>
+    );
+};
+
 export default function BottomTabStack() {
     return (
         <BottomTab.Navigator screenOptions={{ headerShown: false }}>
-            <BottomTab.Screen name="Home Tab" component={HomeStack} />
-            <BottomTab.Screen name="Tutors Tab" component={TutorSearchStack} />
+            <BottomTab.Screen name="HomeBottomTab" component={HomeBottomTab} />
             <BottomTab.Screen
-                name="Schedule Tab"
+                name="TutorsBottomTab"
+                component={TutorsBottomTab}
                 options={{
-                    headerTitle: "Schedule",
-                    headerShown: true,
+                    headerShown: false,
                 }}
-                component={ScheduleStack}
             />
-            <BottomTab.Screen name="Profile Tab" component={ProfileScreen} />
+            <BottomTab.Screen
+                name="ScheduleBottomTab"
+                options={{
+                    headerShown: false,
+                }}
+                component={ScheduleBottomTab}
+            />
+            <BottomTab.Screen
+                name="CoursesBottomTab"
+                options={{
+                    headerShown: false,
+                }}
+                component={CourseBottomTab}
+            />
+            <BottomTab.Screen
+                name="ProfileBottomTab"
+                component={ProfileScreen}
+                options={{
+                    headerShown: false,
+                }}
+            />
         </BottomTab.Navigator>
     );
 }

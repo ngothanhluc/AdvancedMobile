@@ -2,7 +2,9 @@ const COLORS = {
     primary: "#0984e3",
     primaryContainer: "#e6f3fc",
     secondary: "#6c5ce7",
-    secondaryContainer: "#f0effd",
+    surface: "#e6f3fc",
+    background: "#e6f3fc",
+    secondaryContainer: "#e6f3fc",
     darkNeutral: "#2d3436",
 };
 

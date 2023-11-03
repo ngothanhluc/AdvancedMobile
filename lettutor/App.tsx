@@ -13,15 +13,17 @@ const theme = {
         primaryContainer: COLORS.primaryContainer,
         secondary: COLORS.secondary,
         secondaryContainer: COLORS.secondaryContainer,
+        surface: COLORS.surface,
+        background: COLORS.background,
     },
 };
 export default function App() {
-    const user = null;
+    const user = "null";
     return (
         <PaperProvider theme={theme}>
             <StatusBar style="auto" />
             <NavigationContainer>
-                {user ? (
+                {!user ? (
                     <AuthStack></AuthStack>
                 ) : (
                     <BottomTabStack></BottomTabStack>
