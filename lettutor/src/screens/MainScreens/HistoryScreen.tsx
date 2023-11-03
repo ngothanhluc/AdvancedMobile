@@ -1,6 +1,6 @@
 import React from "react";
 import { View, Text, ScrollView, Pressable } from "react-native";
-import { Menu } from "react-native-paper";
+import { Menu, Button, Icon } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
 import HistoryCard from "../../components/HistoryCard";
 import COLORS from "../../constants/Colors";
@@ -13,15 +13,14 @@ const HistoryScreen = () => {
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
             <ScrollView style={{ padding: 10 }}>
-                <View>
+                <View style={{ gap: 20 }}>
                     <Text
                         style={{
                             fontWeight: "bold",
                             fontSize: 20,
-                            marginBottom: 10,
                         }}
                     >
-                        You have 1 booked 1299 classes
+                        You have booked 1299 classes
                     </Text>
                     <View>
                         <View
@@ -62,6 +61,30 @@ const HistoryScreen = () => {
                     <View style={{ gap: 20 }}>
                         <HistoryCard />
                         <HistoryCard />
+                    </View>
+                    <View
+                        style={{
+                            marginBottom: 20,
+                            flexDirection: "row",
+                            justifyContent: "space-between",
+                            alignContent: "center",
+                        }}
+                    >
+                        <Button mode="contained" disabled={true}>
+                            <Icon
+                                source="chevron-left"
+                                color="#fff"
+                                size={20}
+                            ></Icon>
+                        </Button>
+                        <Text style={{ alignSelf: "center" }}>Page 1 / 2</Text>
+                        <Button mode="contained">
+                            <Icon
+                                source="chevron-right"
+                                color="#fff"
+                                size={20}
+                            ></Icon>
+                        </Button>
                     </View>
                 </View>
             </ScrollView>

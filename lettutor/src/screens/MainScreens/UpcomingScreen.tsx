@@ -23,41 +23,36 @@ const UpcomingScreen = () => {
                     >
                         You have 2 upcoming class
                     </Text>
-                    <View>
-                        <View
-                            style={{
-                                flexDirection: "row",
-                                alignItems: "center",
-                                alignSelf: "flex-end",
-                            }}
+                    <View
+                        style={{
+                            flexDirection: "row",
+                            alignItems: "center",
+                            alignSelf: "flex-end",
+                        }}
+                    >
+                        <Text>Classes per page</Text>
+                        <Menu
+                            visible={visible}
+                            onDismiss={closeMenu}
+                            anchor={
+                                <Pressable
+                                    style={{
+                                        paddingVertical: 5,
+                                        paddingHorizontal: 20,
+                                        marginLeft: 10,
+                                        backgroundColor: COLORS.primary,
+                                        borderRadius: 10,
+                                    }}
+                                    onPress={openMenu}
+                                >
+                                    <Text style={{ color: "#fff" }}>1</Text>
+                                </Pressable>
+                            }
                         >
-                            <Text>Classes per page</Text>
-                            <Menu
-                                visible={visible}
-                                onDismiss={closeMenu}
-                                anchor={
-                                    <Pressable
-                                        style={{
-                                            paddingVertical: 5,
-                                            paddingHorizontal: 20,
-                                            marginLeft: 10,
-                                            backgroundColor: COLORS.primary,
-                                            borderRadius: 10,
-                                        }}
-                                        onPress={openMenu}
-                                    >
-                                        <Text style={{ color: "#fff" }}>1</Text>
-                                    </Pressable>
-                                }
-                            >
-                                <Menu.Item
-                                    onPress={() => {}}
-                                    title="1"
-                                ></Menu.Item>
-                                <Menu.Item onPress={() => {}} title="2" />
-                                <Menu.Item onPress={() => {}} title="3" />
-                            </Menu>
-                        </View>
+                            <Menu.Item onPress={() => {}} title="1"></Menu.Item>
+                            <Menu.Item onPress={() => {}} title="2" />
+                            <Menu.Item onPress={() => {}} title="3" />
+                        </Menu>
                     </View>
                     <View style={{ gap: 20 }}>
                         <UpcomingCard />

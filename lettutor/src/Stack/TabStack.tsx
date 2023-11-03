@@ -11,6 +11,7 @@ import UpcomingScreen from "../screens/MainScreens/UpcomingScreen";
 import AllCourseScreen from "../screens/MainScreens/AllCourseScreen";
 import EBookScreen from "../screens/MainScreens/EBookScreen";
 import CourseDetailsScreen from "../screens/MainScreens/CourseDetailsScreen";
+import { Icon } from "react-native-paper";
 const TopTab = createMaterialTopTabNavigator();
 const BottomTab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -72,33 +73,66 @@ const CourseBottomTab = () => {
 export default function BottomTabStack() {
     return (
         <BottomTab.Navigator screenOptions={{ headerShown: false }}>
-            <BottomTab.Screen name="HomeBottomTab" component={HomeBottomTab} />
+            <BottomTab.Screen
+                name="HomeBottomTab"
+                component={HomeBottomTab}
+                options={{
+                    tabBarLabel: "Home",
+                    tabBarIcon: ({ color, size }) => (
+                        <Icon source="home" color={color} size={size}></Icon>
+                    ),
+                }}
+            />
             <BottomTab.Screen
                 name="TutorsBottomTab"
                 component={TutorsBottomTab}
                 options={{
-                    headerShown: false,
+                    tabBarLabel: "Tutors",
+                    tabBarIcon: ({ color, size }) => (
+                        <Icon
+                            source="account-search"
+                            color={color}
+                            size={size}
+                        ></Icon>
+                    ),
                 }}
             />
             <BottomTab.Screen
                 name="ScheduleBottomTab"
-                options={{
-                    headerShown: false,
-                }}
                 component={ScheduleBottomTab}
+                options={{
+                    tabBarLabel: "Schedule",
+                    tabBarIcon: ({ color, size }) => (
+                        <Icon
+                            source="calendar"
+                            color={color}
+                            size={size}
+                        ></Icon>
+                    ),
+                }}
             />
             <BottomTab.Screen
                 name="CoursesBottomTab"
-                options={{
-                    headerShown: false,
-                }}
                 component={CourseBottomTab}
+                options={{
+                    tabBarLabel: "Courses",
+                    tabBarIcon: ({ color, size }) => (
+                        <Icon
+                            source="book-open"
+                            color={color}
+                            size={size}
+                        ></Icon>
+                    ),
+                }}
             />
             <BottomTab.Screen
                 name="ProfileBottomTab"
                 component={ProfileScreen}
                 options={{
-                    headerShown: false,
+                    tabBarLabel: "Profile",
+                    tabBarIcon: ({ color, size }) => (
+                        <Icon source="account" color={color} size={size}></Icon>
+                    ),
                 }}
             />
         </BottomTab.Navigator>
