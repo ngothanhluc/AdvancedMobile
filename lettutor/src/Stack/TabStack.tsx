@@ -12,6 +12,7 @@ import AllCourseScreen from "../screens/MainScreens/AllCourseScreen";
 import EBookScreen from "../screens/MainScreens/EBookScreen";
 import CourseDetailsScreen from "../screens/MainScreens/CourseDetailsScreen";
 import { Icon } from "react-native-paper";
+import SettingScreen from "../screens/MainScreens/SettingScreen";
 const TopTab = createMaterialTopTabNavigator();
 const BottomTab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -29,7 +30,7 @@ const HomeBottomTab = () => {
 };
 const TutorsBottomTab = () => {
     return (
-        <Stack.Navigator screenOptions={{ headerShown: false }}>
+        <Stack.Navigator>
             <Stack.Screen name="Tutors Search" component={TutorSearchScreen} />
             <Stack.Screen
                 name="Tutor Search Result"
@@ -126,12 +127,12 @@ export default function BottomTabStack() {
                 }}
             />
             <BottomTab.Screen
-                name="ProfileBottomTab"
-                component={ProfileScreen}
+                name="Settings"
+                component={SettingScreen}
                 options={{
-                    tabBarLabel: "Profile",
+                    tabBarLabel: "Settings",
                     tabBarIcon: ({ color, size }) => (
-                        <Icon source="account" color={color} size={size}></Icon>
+                        <Icon source="cog" color={color} size={size}></Icon>
                     ),
                 }}
             />
