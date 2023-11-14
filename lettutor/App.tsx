@@ -5,6 +5,8 @@ import AuthStack from "./src/Stack/AuthStack";
 import BottomTabStack from "./src/Stack/TabStack";
 import { MD3LightTheme, PaperProvider } from "react-native-paper";
 import COLORS from "./src/constants/Colors";
+import { store } from "./store";
+import { Provider } from "react-redux";
 const theme = {
     ...MD3LightTheme,
     colors: {
@@ -18,18 +20,20 @@ const theme = {
     },
 };
 export default function App() {
-    const user = "null";
+    const user = null;
     return (
-        <PaperProvider theme={theme}>
-            <StatusBar hidden={true} />
-            <NavigationContainer>
-                {!user ? (
-                    <AuthStack></AuthStack>
-                ) : (
-                    <BottomTabStack></BottomTabStack>
-                )}
-            </NavigationContainer>
-        </PaperProvider>
+        <Provider store={store}>
+            <PaperProvider theme={theme}>
+                <StatusBar style="auto" />
+                <NavigationContainer>
+                    {!user ? (
+                        <AuthStack></AuthStack>
+                    ) : (
+                        <BottomTabStack></BottomTabStack>
+                    )}
+                </NavigationContainer>
+            </PaperProvider>
+        </Provider>
     );
 }
 
