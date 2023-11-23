@@ -1,12 +1,12 @@
-import { NavigationContainer } from "@react-navigation/native";
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet } from "react-native";
-import AuthStack from "./src/Stack/AuthStack";
-import BottomTabStack from "./src/Stack/TabStack";
+
 import { MD3LightTheme, PaperProvider } from "react-native-paper";
 import COLORS from "./src/constants/Colors";
 import { store } from "./store";
 import { Provider } from "react-redux";
+import MainStack from "./src/Stack/MainStack";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 const theme = {
     ...MD3LightTheme,
     colors: {
@@ -19,20 +19,16 @@ const theme = {
         background: COLORS.background,
     },
 };
+const queryClient = new QueryClient();
 export default function App() {
-    const user = null;
     return (
         <Provider store={store}>
-            <PaperProvider theme={theme}>
-                <StatusBar style="auto" />
-                <NavigationContainer>
-                    {!user ? (
-                        <AuthStack></AuthStack>
-                    ) : (
-                        <BottomTabStack></BottomTabStack>
-                    )}
-                </NavigationContainer>
-            </PaperProvider>
+            <QueryClientProvider client={queryClient}>
+                <PaperProvider theme={theme}>
+                    <StatusBar style="auto" />
+                    <MainStack />
+                </PaperProvider>
+            </QueryClientProvider>
         </Provider>
     );
 }

@@ -3,8 +3,13 @@ import { Pressable, ScrollView, Text, View } from "react-native";
 import { Avatar, Button, Icon } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
 import COLORS from "../../constants/Colors";
-
+import { logout } from "../../redux/reducers/authSlice";
+import { useDispatch } from "react-redux";
 const SettingScreen = () => {
+    const dispatch = useDispatch();
+    const handleLogout = () => {
+        dispatch(logout());
+    };
     return (
         <SafeAreaView style={{ flex: 1 }}>
             <ScrollView style={{ padding: 20, backgroundColor: "#fff" }}>
@@ -86,6 +91,7 @@ const SettingScreen = () => {
                     mode="elevated"
                     buttonColor={COLORS.errorContainer}
                     textColor={COLORS.error}
+                    onPress={handleLogout}
                 >
                     Logout
                 </Button>

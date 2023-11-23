@@ -6,7 +6,12 @@ import { AntDesign } from "@expo/vector-icons";
 import COLORS from "../constants/Colors";
 import { useNavigation } from "@react-navigation/native";
 import SpecialtyTag from "./SpecialtyTag";
-const TutorCard = (props) => {
+import type Tutor from "../types/tutor";
+interface Props {
+    bookAble?: boolean;
+    tutor: Tutor;
+}
+const TutorCard = ({ bookAble, tutor }: Props) => {
     const [rating, setRating] = useState(5);
     const navigator = useNavigation();
     const specialties =
@@ -18,9 +23,8 @@ const TutorCard = (props) => {
         setRating(rating);
     };
     const handleBookClick = () => {
-        navigator.navigate("Tutor Detail");
+        navigator.navigate("Tutor Detail", { tutorID: tutor.userId });
     };
-
     return (
         <View
             style={{
@@ -62,7 +66,13 @@ const TutorCard = (props) => {
                             height: "100%",
                             borderRadius: 100,
                         }}
-                        source={tutorAvatar}
+                        source={
+                            tutor?.avatar !== null &&
+                            tutor?.avatar !==
+                                "https://www.alliancerehabmed.com/wp-content/uploads/icon-avatar-default.png"
+                                ? { uri: tutor.avatar }
+                                : { uri: "https://picsum.photos/200" }
+                        }
                     ></Image>
                 </View>
 
@@ -73,12 +83,12 @@ const TutorCard = (props) => {
                     }}
                 >
                     <Text style={{ fontSize: 20, fontWeight: "bold" }}>
-                        Joan Gacer
+                        {tutor.name}
                     </Text>
-                    <Text style={{ fontSize: 16 }}>Taiwan</Text>
+                    <Text style={{ fontSize: 16 }}>{tutor.language}</Text>
                     <Rate
                         disabled={true}
-                        rating={rating}
+                        rating={tutor.rating}
                         setRating={handleRating}
                     ></Rate>
                 </View>
@@ -94,12 +104,12 @@ const TutorCard = (props) => {
             </View>
 
             <View style={{ flexDirection: "row", flexWrap: "wrap", gap: 10 }}>
-                {specialtiesArray.map((specialty, index) => {
+                {tutor.specialties.split(",").map((specialty, index) => {
                     return <SpecialtyTag specialty={specialty} key={index} />;
                 })}
             </View>
             <Text style={{ fontSize: 14, lineHeight: 20 }}>{bio}</Text>
-            {props.bookAble && (
+            {bookAble && (
                 <Pressable
                     onPress={handleBookClick}
                     style={{

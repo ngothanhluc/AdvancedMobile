@@ -1,21 +1,29 @@
+import { ResizeMode, Video } from "expo-av";
 import React, { useState } from "react";
 import {
-    View,
-    Text,
-    Pressable,
     Image,
-    StyleSheet,
+    Pressable,
     ScrollView,
+    StyleSheet,
+    Text,
+    View,
 } from "react-native";
+import { Button, Icon } from "react-native-paper";
+import { SafeAreaView } from "react-native-safe-area-context";
 import tutorAvatar from "../../assets/tutor/keegan-avatar.png";
 import Rate from "../../components/Rate";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { Icon } from "react-native-paper";
-import COLORS from "../../constants/Colors";
-import { Video, ResizeMode } from "expo-av";
 import SpecialtyTag from "../../components/SpecialtyTag";
-import { Button } from "react-native-paper";
-const TutorDetailScreen = () => {
+import COLORS from "../../constants/Colors";
+import TutorAPI from "../../services/TutorAPI";
+import { useQuery } from "@tanstack/react-query";
+import type TutorDetails from "../../types/tutorDetails";
+import LoadingOverlay from "../../components/LoadingOverlay";
+const TutorDetailScreen = ({ route }: any) => {
+    const { tutorID } = route.params;
+    const { data: tutor, isLoading } = useQuery<TutorDetails>({
+        queryKey: ["tutorDetail", tutorID],
+        queryFn: () => TutorAPI.getTutorByID(tutorID),
+    });
     const [rating, setRating] = useState(4);
     const specialties =
         "business-english,conversational-english,english-for-kids,ielts,starters,movers,flyers,ket,pet,toefl,toeic";
@@ -34,6 +42,9 @@ const TutorDetailScreen = () => {
     };
     const video = React.useRef(null);
     const [status, setStatus] = useState({});
+    if (isLoading) {
+        return <LoadingOverlay message={"Loading Tutor Details..."} />;
+    }
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
             <ScrollView
@@ -64,7 +75,13 @@ const TutorDetailScreen = () => {
                                     height: "100%",
                                     borderRadius: 100,
                                 }}
-                                source={tutorAvatar}
+                                source={
+                                    tutor?.User?.avatar !== null &&
+                                    tutor?.User?.avatar !==
+                                        "https://www.alliancerehabmed.com/wp-content/uploads/icon-avatar-default.png"
+                                        ? { uri: tutor?.User.avatar }
+                                        : { uri: "https://picsum.photos/200" }
+                                }
                             ></Image>
                         </View>
 
@@ -75,9 +92,9 @@ const TutorDetailScreen = () => {
                             }}
                         >
                             <Text style={{ fontSize: 20, fontWeight: "bold" }}>
-                                Joan Gacer
+                                {tutor?.User?.name || "Keegan"}
                             </Text>
-                            <Text>Taiwan</Text>
+                            <Text>{tutor?.User?.language}</Text>
                             <View
                                 style={{
                                     flexDirection: "row",
@@ -87,7 +104,7 @@ const TutorDetailScreen = () => {
                             >
                                 <Rate
                                     disabled={true}
-                                    rating={rating}
+                                    rating={tutor?.rating}
                                     setRating={handleRating}
                                 ></Rate>
                                 <Text>( 20 )</Text>
@@ -102,7 +119,7 @@ const TutorDetailScreen = () => {
                         ></View>
                     </View>
 
-                    <Text>{bio}</Text>
+                    <Text>{tutor?.bio}</Text>
                     <View
                         style={{
                             flexDirection: "row",
@@ -195,9 +212,13 @@ const TutorDetailScreen = () => {
                                 width: "100%",
                                 height: 300,
                             }}
-                            source={{
-                                uri: "https://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4",
-                            }}
+                            source={
+                                tutor?.video
+                                    ? { uri: tutor.video }
+                                    : {
+                                          uri: "https://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4",
+                                      }
+                            }
                             onPlaybackStatusUpdate={(status) =>
                                 setStatus(() => status)
                             }
@@ -218,7 +239,7 @@ const TutorDetailScreen = () => {
                                 gap: 10,
                             }}
                         >
-                            {specialtiesArray.map((specialty) => (
+                            {tutor?.specialties?.split(",").map((specialty) => (
                                 <SpecialtyTag
                                     key={specialty}
                                     specialty={specialty}
@@ -228,13 +249,13 @@ const TutorDetailScreen = () => {
                     </View>
                     <View>
                         <Text style={{ fontWeight: "bold" }}>Interests</Text>
-                        <Text>{interests}</Text>
+                        <Text>{tutor?.interests}</Text>
                     </View>
                     <View>
                         <Text style={{ fontWeight: "bold" }}>
                             Teaching Experience
                         </Text>
-                        <Text>{experience}</Text>
+                        <Text>{tutor?.experience}</Text>
                     </View>
                     <Button
                         mode="outlined"

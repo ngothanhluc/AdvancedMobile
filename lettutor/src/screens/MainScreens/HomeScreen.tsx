@@ -4,11 +4,19 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import TutorCard from "../../components/TutorCard";
 import COLORS from "../../constants/Colors";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import type Tutor from "../../types/tutor";
+import TutorAPI from "../../services/TutorAPI";
+import { useQuery } from "@tanstack/react-query";
+import LoadingOverlay from "../../components/LoadingOverlay";
 const HomeScreen = () => {
     const date = new Date();
     const handleEnterLessonRoom = () => {
         console.log("Enter Lesson Room");
     };
+    const { data: tutors, isLoading } = useQuery<Tutor[]>({
+        queryKey: ["tutorsHomePage"],
+        queryFn: () => TutorAPI.getTutors(),
+    });
     return (
         <SafeAreaView>
             <ScrollView>
@@ -70,12 +78,20 @@ const HomeScreen = () => {
                         <Text style={{ fontSize: 20, fontWeight: "bold" }}>
                             Recommended Tutor
                         </Text>
-                        <TutorCard bookAble={true} />
-                        <TutorCard bookAble={true} />
-                        <TutorCard bookAble={true} />
-                        <TutorCard bookAble={true} />
-                        <TutorCard bookAble={true} />
-                        <TutorCard bookAble={true} />
+                        {isLoading ? (
+                            <LoadingOverlay message={"Loading Tutors..."} />
+                        ) : (
+                            <>
+                                {tutors &&
+                                    tutors?.map((tutor) => (
+                                        <TutorCard
+                                            key={tutor.id}
+                                            bookAble={true}
+                                            tutor={tutor}
+                                        />
+                                    ))}
+                            </>
+                        )}
                     </View>
                 </View>
             </ScrollView>
