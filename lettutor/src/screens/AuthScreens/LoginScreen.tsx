@@ -9,12 +9,18 @@ import { loginSuccess } from "../../redux/reducers/authSlice";
 const LoginScreen = () => {
     const [isAuthenticating, setIsAuthenticating] = React.useState(false);
     const dispatch = useDispatch();
-    const loginHandler = async ({ email, password }) => {
+    const loginHandler = async ({
+        email,
+        password,
+    }: {
+        email: string;
+        password: string;
+    }) => {
         setIsAuthenticating(true);
         try {
             const response = await AuthAPI.login(email, password);
             dispatch(loginSuccess(response));
-        } catch (error) {
+        } catch (error: any) {
             Alert.alert("Login failed", error.response.data.message);
         }
         setIsAuthenticating(false);

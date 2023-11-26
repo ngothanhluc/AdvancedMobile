@@ -21,7 +21,7 @@ const HomeBottomTab = () => {
     return (
         <Stack.Navigator>
             <Stack.Screen
-                name="HomeScreen"
+                name="Home Screen"
                 component={HomeScreen}
                 options={{ headerShown: false }}
             />
@@ -43,6 +43,7 @@ const TutorsBottomTab = () => {
                 name="Tutor Search Result"
                 component={TutorSearchResultScreen}
             />
+            <Stack.Screen name="Tutor Detail" component={TutorDetailScreen} />
         </Stack.Navigator>
     );
 };
