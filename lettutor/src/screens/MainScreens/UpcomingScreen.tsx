@@ -4,12 +4,22 @@ import { Menu, Button, Icon } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
 import UpcomingCard from "../../components/UpcomingCard";
 import COLORS from "../../constants/Colors";
+import { useQuery } from "@tanstack/react-query";
+import UserAPI from "../../services/UserAPI";
+import type { Booking } from "../../types/booking";
 const UpcomingScreen = () => {
     const [visible, setVisible] = React.useState(false);
 
     const openMenu = () => setVisible(true);
 
     const closeMenu = () => setVisible(false);
+    const { data: allUpcomingLessons, isLoading } = useQuery<{
+        count: number;
+        rows: Booking[];
+    }>({
+        queryKey: ["allUpcomingLessons"],
+        queryFn: () => UserAPI.getAllUpcomingLesson({ page: 1, perPage: 9 }),
+    });
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
             <ScrollView style={{ padding: 20 }}>
@@ -21,7 +31,7 @@ const UpcomingScreen = () => {
                             marginBottom: 10,
                         }}
                     >
-                        You have 2 upcoming class
+                        You have {allUpcomingLessons?.count} upcoming class
                     </Text>
                     <View
                         style={{
@@ -55,8 +65,12 @@ const UpcomingScreen = () => {
                         </Menu>
                     </View>
                     <View style={{ gap: 20 }}>
-                        <UpcomingCard />
-                        <UpcomingCard />
+                        {allUpcomingLessons?.rows.map((lesson) => (
+                            <UpcomingCard
+                                key={lesson.id}
+                                lesson={lesson}
+                            ></UpcomingCard>
+                        ))}
                     </View>
                     <View
                         style={{

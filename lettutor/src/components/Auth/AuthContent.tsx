@@ -7,7 +7,7 @@ import googleLogo from "../../assets/logo/google.png";
 import lettutor2 from "../../assets/logo/lettutor2.png";
 import COLORS from "../../constants/Colors";
 import AuthForm from "./AuthForm";
-const AuthContent = ({ isLogin, onAuthenticate }) => {
+const AuthContent = ({ isLogin, isForgotPassword, onAuthenticate }) => {
     const navigation = useNavigation();
     const [open, setOpen] = useState(false);
     const [languageValue, setLanguageValue] = useState("vi");
@@ -38,7 +38,23 @@ const AuthContent = ({ isLogin, onAuthenticate }) => {
         const passwordIsValid = password.length > 5;
         const emailsAreEqual = email === confirmEmail;
         const passwordsAreEqual = password === confirmPassword;
-
+        if (isForgotPassword) {
+            if (!emailIsValid) {
+                Alert.alert(
+                    "Invalid input",
+                    "Please check your entered credentials."
+                );
+                setCredentialsInvalid({
+                    email: !emailIsValid,
+                    confirmEmail: !emailIsValid || !emailsAreEqual,
+                    password: false,
+                    confirmPassword: false,
+                });
+                return;
+            }
+            onAuthenticate({ email });
+            return;
+        }
         if (
             !emailIsValid ||
             !passwordIsValid ||
@@ -82,12 +98,15 @@ const AuthContent = ({ isLogin, onAuthenticate }) => {
             ></DropDownPicker>
             <Image source={lettutor2}></Image>
             <AuthForm
+                isForgotPassword={isForgotPassword}
                 isLogin={isLogin}
                 onSubmit={submitHandler}
                 credentialsInvalid={credentialsInvalid}
             />
             {isLogin && (
-                <Pressable>
+                <Pressable
+                    onPress={() => navigation.navigate("ForgotPassword")}
+                >
                     <Text
                         style={{
                             color: COLORS.secondary,
@@ -99,44 +118,49 @@ const AuthContent = ({ isLogin, onAuthenticate }) => {
                     </Text>
                 </Pressable>
             )}
-
-            <Text>Or continue with</Text>
-            <View style={{ flexDirection: "row", gap: 10 }}>
-                <Pressable onPress={handleFacebookLogin}>
-                    <Image
-                        style={{ width: 40, height: 40 }}
-                        source={facebookLogo}
-                    />
-                </Pressable>
-                <Pressable onPress={handleGoogleLogin}>
-                    <Image
-                        style={{ width: 40, height: 40 }}
-                        source={googleLogo}
-                    ></Image>
-                </Pressable>
-            </View>
-            <View
-                style={{
-                    flexDirection: "row",
-                    alignItems: "center",
-                    gap: 20,
-                }}
-            >
-                <Text>
-                    {isLogin ? "Not a member yet?" : "Already a member?"}
-                </Text>
-                <Pressable onPress={switchAuthModeHandler}>
-                    <Text
+            {!isForgotPassword && (
+                <>
+                    <Text>Or continue with</Text>
+                    <View style={{ flexDirection: "row", gap: 10 }}>
+                        <Pressable onPress={handleFacebookLogin}>
+                            <Image
+                                style={{ width: 40, height: 40 }}
+                                source={facebookLogo}
+                            />
+                        </Pressable>
+                        <Pressable onPress={handleGoogleLogin}>
+                            <Image
+                                style={{ width: 40, height: 40 }}
+                                source={googleLogo}
+                            ></Image>
+                        </Pressable>
+                    </View>
+                    <View
                         style={{
-                            color: COLORS.secondary,
-                            fontWeight: "600",
-                            fontSize: 16,
+                            flexDirection: "row",
+                            alignItems: "center",
+                            gap: 20,
                         }}
                     >
-                        {isLogin ? "Register" : "Login"}
-                    </Text>
-                </Pressable>
-            </View>
+                        <Text>
+                            {isLogin
+                                ? "Not a member yet?"
+                                : "Already a member?"}
+                        </Text>
+                        <Pressable onPress={switchAuthModeHandler}>
+                            <Text
+                                style={{
+                                    color: COLORS.secondary,
+                                    fontWeight: "600",
+                                    fontSize: 16,
+                                }}
+                            >
+                                {isLogin ? "Register" : "Login"}
+                            </Text>
+                        </Pressable>
+                    </View>
+                </>
+            )}
         </View>
     );
 };

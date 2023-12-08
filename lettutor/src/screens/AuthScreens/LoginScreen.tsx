@@ -19,7 +19,7 @@ const LoginScreen = () => {
         setIsAuthenticating(true);
         try {
             const response = await AuthAPI.login(email, password);
-            dispatch(loginSuccess(response));
+            if (response) dispatch(loginSuccess(response));
         } catch (error: any) {
             Alert.alert("Login failed", error.response.data.message);
         }
@@ -32,6 +32,7 @@ const LoginScreen = () => {
         <SafeAreaView style={{ flex: 1 }}>
             <View style={styles.container}>
                 <AuthContent
+                    isForgotPassword={false}
                     isLogin={true}
                     onAuthenticate={loginHandler}
                 ></AuthContent>

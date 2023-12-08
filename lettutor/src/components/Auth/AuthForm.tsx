@@ -1,10 +1,11 @@
 import { useState } from "react";
-import { StyleSheet, View, Text, Pressable } from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 
-import { Button } from "react-native-paper";
-import Input from "./Input";
+import { useNavigation } from "@react-navigation/native";
 import COLORS from "../../constants/Colors";
-function AuthForm({ isLogin, onSubmit, credentialsInvalid }) {
+import Input from "./Input";
+function AuthForm({ isLogin, isForgotPassword, onSubmit, credentialsInvalid }) {
+    const navigation = useNavigation();
     const [enteredEmail, setEnteredEmail] = useState("");
     const [enteredConfirmEmail, setEnteredConfirmEmail] = useState("");
     const [enteredPassword, setEnteredPassword] = useState("");
@@ -53,7 +54,7 @@ function AuthForm({ isLogin, onSubmit, credentialsInvalid }) {
                 keyboardType="email-address"
                 isInvalid={emailIsInvalid}
             />
-            {!isLogin && (
+            {!isForgotPassword && !isLogin && (
                 <Input
                     label="Confirm Email Address"
                     placeholder={"abc@example.com"}
@@ -66,15 +67,21 @@ function AuthForm({ isLogin, onSubmit, credentialsInvalid }) {
                     isInvalid={emailsDontMatch}
                 />
             )}
-            <Input
-                label="Password"
-                placeholder={"********"}
-                onUpdateValue={updateInputValueHandler.bind(this, "password")}
-                secure
-                value={enteredPassword}
-                isInvalid={passwordIsInvalid}
-            />
-            {!isLogin && (
+            {!isForgotPassword && (
+                <Input
+                    label="Password"
+                    placeholder={"********"}
+                    onUpdateValue={updateInputValueHandler.bind(
+                        this,
+                        "password"
+                    )}
+                    secure
+                    value={enteredPassword}
+                    isInvalid={passwordIsInvalid}
+                />
+            )}
+
+            {!isLogin && !isForgotPassword && (
                 <Input
                     label="Confirm Password"
                     placeholder={"********"}
@@ -87,23 +94,43 @@ function AuthForm({ isLogin, onSubmit, credentialsInvalid }) {
                     isInvalid={passwordsDontMatch}
                 />
             )}
-            <View style={styles.buttons}>
+            <Pressable
+                disabled={false}
+                onPress={submitHandler}
+                style={styles.buttonLogin}
+            >
+                <Text
+                    style={{
+                        fontSize: 20,
+                        fontWeight: "700",
+                        color: "#fff",
+                    }}
+                >
+                    {isForgotPassword
+                        ? "Send Recovery Email"
+                        : isLogin
+                        ? "Log In"
+                        : "Sign Up"}
+                </Text>
+            </Pressable>
+            {isForgotPassword && (
                 <Pressable
-                    disabled={false}
-                    onPress={submitHandler}
-                    style={styles.buttonLogin}
+                    onPress={() => {
+                        navigation.navigate("Login");
+                    }}
+                    style={{ width: "100%", alignItems: "center" }}
                 >
                     <Text
                         style={{
-                            fontSize: 20,
-                            fontWeight: "700",
-                            color: "#fff",
+                            color: COLORS.secondary,
+                            fontWeight: "600",
+                            fontSize: 16,
                         }}
                     >
-                        {isLogin ? "Log In" : "Sign Up"}
+                        Back to Login
                     </Text>
                 </Pressable>
-            </View>
+            )}
         </View>
     );
 }

@@ -1,17 +1,24 @@
 import React from "react";
-import { StyleSheet, View, Alert } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useDispatch } from "react-redux";
 import AuthContent from "../../components/Auth/AuthContent";
+import LoadingOverlay from "../../components/LoadingOverlay";
 import COLORS from "../../constants/Colors";
 import AuthAPI from "../../services/AuthAPI";
-
-import { useQuery } from "@tanstack/react-query";
-import LoadingOverlay from "../../components/LoadingOverlay";
+import { loginSuccess } from "../../redux/reducers/authSlice";
+import { Alert } from "react-native";
 const RegisterScreen = () => {
     const [isAuthenticating, setIsAuthenticating] = React.useState(false);
+    const dispatch = useDispatch();
     const registerHandler = async ({ email, password }) => {
         setIsAuthenticating(true);
-        const response = await AuthAPI.register(email, password);
+        try {
+            const response = await AuthAPI.register(email, password);
+            if (response) dispatch(loginSuccess(response));
+        } catch (error) {
+            Alert.alert("Register failed", error.response.data.message);
+        }
         setIsAuthenticating(false);
     };
     if (isAuthenticating) {
@@ -21,6 +28,7 @@ const RegisterScreen = () => {
         <SafeAreaView style={{ flex: 1 }}>
             <View style={styles.container}>
                 <AuthContent
+                    isForgotPassword={false}
                     isLogin={false}
                     onAuthenticate={registerHandler}
                 ></AuthContent>

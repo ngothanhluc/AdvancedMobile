@@ -25,6 +25,16 @@ const AuthAPI = {
             Alert.alert("Error", error.response.data.message);
         }
     },
+    forgotPassword: async (email: string) => {
+        try {
+            const response = await apiClient.post(`user/forgotPassword`, {
+                email,
+            });
+            return response;
+        } catch (error: any) {
+            Alert.alert("Error", error.response.data.message);
+        }
+    },
 };
 
 export default AuthAPI;

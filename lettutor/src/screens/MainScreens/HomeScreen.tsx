@@ -1,6 +1,6 @@
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useQuery } from "@tanstack/react-query";
-import React from "react";
+import React, { useEffect } from "react";
 import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useDispatch } from "react-redux";
@@ -11,12 +11,20 @@ import { Specialty, setSpecialties } from "../../redux/reducers/specialtySlice";
 import TutorAPI from "../../services/TutorAPI";
 import UserAPI from "../../services/UserAPI";
 import type Tutor from "../../types/tutor";
+import type { Booking } from "../../types/booking";
 const HomeScreen = () => {
     const dispatch = useDispatch();
-    const date = new Date();
     const handleEnterLessonRoom = () => {
         console.log("Enter Lesson Room");
     };
+    const { data: totalLessonTime } = useQuery<{ total: number }>({
+        queryKey: ["totalLessonTime"],
+        queryFn: () => UserAPI.getTotalLessonTime(),
+    });
+    const { data: upcomingLesson } = useQuery({
+        queryKey: ["upcomingLesson"],
+        queryFn: () => UserAPI.getUpcomingLesson(),
+    });
     const { data: tutors, isLoading } = useQuery<Tutor[]>({
         queryKey: ["tutorsHomePage"],
         queryFn: () => TutorAPI.getTutors({ perPage: 9, page: 1 }),
@@ -29,15 +37,34 @@ const HomeScreen = () => {
         queryKey: ["testPreparation"],
         queryFn: () => UserAPI.getTestPreparation(),
     });
+    const totalLessonTimeInHours: number = totalLessonTime?.total
+        ? Number(Math.trunc(totalLessonTime?.total / 60))
+        : 0;
+    const totalLessonTimeInMinutes = totalLessonTime
+        ? Number(totalLessonTime?.total % 60)
+        : 0;
     let specialties: Specialty[] = [];
-    if (learnTopics) {
+    if (learnTopics && testPreparation) {
         specialties = specialties.concat(learnTopics);
-    }
-    if (testPreparation) {
         specialties = specialties.concat(testPreparation);
+        specialties.unshift({ key: "all", name: "All" });
+        dispatch(setSpecialties({ specialties: specialties }));
     }
-    specialties.unshift({ key: "all", name: "All" });
-    dispatch(setSpecialties({ specialties: specialties }));
+    const upcomingLessonTime: number =
+        upcomingLesson &&
+        upcomingLesson?.scheduleDetailInfo?.startPeriodTimestamp
+            ? upcomingLesson.scheduleDetailInfo.startPeriodTimestamp
+            : 0;
+    const formattedUpcomingLessonTime = upcomingLessonTime
+        ? new Date(upcomingLessonTime).toLocaleDateString("en-US", {
+              month: "numeric",
+              day: "numeric",
+              year: "numeric",
+              hour: "numeric",
+              minute: "numeric",
+              hour12: true,
+          })
+        : "You have no upcoming lesson";
     return (
         <SafeAreaView>
             <ScrollView>
@@ -58,7 +85,7 @@ const HomeScreen = () => {
                                 fontSize: 14,
                             }}
                         >
-                            {date.toISOString()}
+                            {formattedUpcomingLessonTime}
                         </Text>
                         <Pressable onPress={handleEnterLessonRoom}>
                             <View
@@ -92,7 +119,8 @@ const HomeScreen = () => {
                                 fontSize: 14,
                             }}
                         >
-                            Total Lesson Time: 509 hours 35 minutes
+                            Total Lesson Time: {totalLessonTimeInHours} hours{" "}
+                            {totalLessonTimeInMinutes} minutes
                         </Text>
                     </View>
                     <View style={styles.tutorList}>
