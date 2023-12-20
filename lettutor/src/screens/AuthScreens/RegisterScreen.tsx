@@ -6,16 +6,23 @@ import AuthContent from "../../components/Auth/AuthContent";
 import LoadingOverlay from "../../components/LoadingOverlay";
 import COLORS from "../../constants/Colors";
 import AuthAPI from "../../services/AuthAPI";
-import { loginSuccess } from "../../redux/reducers/authSlice";
+import { useNavigation } from "@react-navigation/native";
 import { Alert } from "react-native";
 const RegisterScreen = () => {
+    const navigation = useNavigation();
     const [isAuthenticating, setIsAuthenticating] = React.useState(false);
     const dispatch = useDispatch();
     const registerHandler = async ({ email, password }) => {
         setIsAuthenticating(true);
         try {
             const response = await AuthAPI.register(email, password);
-            if (response) dispatch(loginSuccess(response));
+            if (response) {
+                Alert.alert(
+                    "Success",
+                    "Please check your email to verify your account"
+                );
+                navigation.navigate("Login");
+            }
         } catch (error) {
             Alert.alert("Register failed", error.response.data.message);
         }

@@ -43,5 +43,15 @@ const TutorAPI = {
             Alert.alert("Error", error.response.data.message);
         }
     },
+    addFavoriteTutor: async (tutorId: string) => {
+        try {
+            const response = await apiClient.post(`/user/manageFavoriteTutor`, {
+                tutorId,
+            });
+            return response.data;
+        } catch (error: any) {
+            Alert.alert("Error", error.response.data.message);
+        }
+    },
 };
 export default TutorAPI;

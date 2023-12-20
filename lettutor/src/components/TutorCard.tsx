@@ -1,18 +1,30 @@
-import React, { useState } from "react";
-import { View, Text, Button, Pressable, Image, StyleSheet } from "react-native";
-import tutorAvatar from "../assets/tutor/keegan-avatar.png";
+import React, { useEffect, useState } from "react";
+import {
+    View,
+    Text,
+    Button,
+    Pressable,
+    Image,
+    StyleSheet,
+    Alert,
+} from "react-native";
 import Rate from "./Rate";
 import { AntDesign } from "@expo/vector-icons";
 import COLORS from "../constants/Colors";
 import { useNavigation } from "@react-navigation/native";
 import SpecialtyTag from "./SpecialtyTag";
 import type Tutor from "../types/tutor";
+import TutorAPI from "../services/TutorAPI";
+import { useQuery } from "@tanstack/react-query";
 interface Props {
     bookAble?: boolean;
     tutor: Tutor;
 }
 const TutorCard = ({ bookAble, tutor }: Props) => {
     const [rating, setRating] = useState(5);
+    const [isFavoriteTutor, setIsFavoriteTutor] = useState(
+        tutor.isFavoriteTutor
+    );
     const navigator = useNavigation();
     const specialties =
         "business-english,conversational-english,english-for-kids,ielts,starters,movers,flyers,ket,pet,toefl,toeic";
@@ -24,6 +36,18 @@ const TutorCard = ({ bookAble, tutor }: Props) => {
     };
     const handleBookClick = () => {
         navigator.navigate("Tutor Detail", { tutorID: tutor.userId });
+    };
+    const handleFavorite = () => {
+        try {
+            const response = TutorAPI.addFavoriteTutor(tutor.userId);
+            if (response.result === 1) {
+                setIsFavoriteTutor(false);
+            } else {
+                setIsFavoriteTutor(true);
+            }
+        } catch (error) {
+            Alert.alert("Error", error.response.data.message);
+        }
     };
     return (
         <View
@@ -99,7 +123,21 @@ const TutorCard = ({ bookAble, tutor }: Props) => {
                         justifyContent: "center",
                     }}
                 >
-                    <AntDesign name="hearto" size={24} color="black" />
+                    {isFavoriteTutor ? (
+                        <AntDesign
+                            name="heart"
+                            size={24}
+                            color="red"
+                            onPress={handleFavorite}
+                        />
+                    ) : (
+                        <AntDesign
+                            name="hearto"
+                            size={24}
+                            color={COLORS.primary}
+                            onPress={handleFavorite}
+                        />
+                    )}
                 </View>
             </View>
 

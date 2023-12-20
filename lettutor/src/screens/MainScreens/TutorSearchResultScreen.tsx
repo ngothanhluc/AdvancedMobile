@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text, ScrollView, Pressable } from "react-native";
 import TutorCard from "../../components/TutorCard";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -21,7 +21,7 @@ const TutorSearchResultScreen = ({ route }) => {
     const closeMenu = () => setVisible(false);
     const [page, setPage] = useState(1);
     const [perPage, setPerPage] = useState(5);
-    const { data: rawResponse, isLoading } = useQuery({
+    const { data: rawResponse, isLoading } = useQuery<ResponseInterface>({
         queryKey: ["tutorsSearchResult", page, perPage, route.params],
         queryFn: () =>
             TutorAPI.searchTutors({ page, perPage, ...route.params }),

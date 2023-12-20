@@ -7,6 +7,7 @@ import COLORS from "../../constants/Colors";
 import { useQuery } from "@tanstack/react-query";
 import UserAPI from "../../services/UserAPI";
 import type { Booking } from "../../types/booking";
+import LoadingOverlay from "../../components/LoadingOverlay";
 const UpcomingScreen = () => {
     const [visible, setVisible] = React.useState(false);
 
@@ -20,6 +21,9 @@ const UpcomingScreen = () => {
         queryKey: ["allUpcomingLessons"],
         queryFn: () => UserAPI.getAllUpcomingLesson({ page: 1, perPage: 9 }),
     });
+    if (isLoading) {
+        return <LoadingOverlay message={"Loading..."} />;
+    }
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
             <ScrollView style={{ padding: 20 }}>
@@ -33,69 +37,80 @@ const UpcomingScreen = () => {
                     >
                         You have {allUpcomingLessons?.count} upcoming class
                     </Text>
-                    <View
-                        style={{
-                            flexDirection: "row",
-                            alignItems: "center",
-                            alignSelf: "flex-end",
-                        }}
-                    >
-                        <Text>Classes per page</Text>
-                        <Menu
-                            visible={visible}
-                            onDismiss={closeMenu}
-                            anchor={
-                                <Pressable
-                                    style={{
-                                        paddingVertical: 5,
-                                        paddingHorizontal: 20,
-                                        marginLeft: 10,
-                                        backgroundColor: COLORS.primary,
-                                        borderRadius: 10,
-                                    }}
-                                    onPress={openMenu}
+                    {allUpcomingLessons?.count && (
+                        <>
+                            <View
+                                style={{
+                                    flexDirection: "row",
+                                    alignItems: "center",
+                                    alignSelf: "flex-end",
+                                }}
+                            >
+                                <Text>Classes per page</Text>
+                                <Menu
+                                    visible={visible}
+                                    onDismiss={closeMenu}
+                                    anchor={
+                                        <Pressable
+                                            style={{
+                                                paddingVertical: 5,
+                                                paddingHorizontal: 20,
+                                                marginLeft: 10,
+                                                backgroundColor: COLORS.primary,
+                                                borderRadius: 10,
+                                            }}
+                                            onPress={openMenu}
+                                        >
+                                            <Text style={{ color: "#fff" }}>
+                                                1
+                                            </Text>
+                                        </Pressable>
+                                    }
                                 >
-                                    <Text style={{ color: "#fff" }}>1</Text>
-                                </Pressable>
-                            }
-                        >
-                            <Menu.Item onPress={() => {}} title="1"></Menu.Item>
-                            <Menu.Item onPress={() => {}} title="2" />
-                            <Menu.Item onPress={() => {}} title="3" />
-                        </Menu>
-                    </View>
-                    <View style={{ gap: 20 }}>
-                        {allUpcomingLessons?.rows.map((lesson) => (
-                            <UpcomingCard
-                                key={lesson.id}
-                                lesson={lesson}
-                            ></UpcomingCard>
-                        ))}
-                    </View>
-                    <View
-                        style={{
-                            marginBottom: 20,
-                            flexDirection: "row",
-                            justifyContent: "space-between",
-                            alignContent: "center",
-                        }}
-                    >
-                        <Button mode="contained" disabled={true}>
-                            <Icon
-                                source="chevron-left"
-                                color="#fff"
-                                size={20}
-                            ></Icon>
-                        </Button>
-                        <Text style={{ alignSelf: "center" }}>Page 1 / 2</Text>
-                        <Button mode="contained">
-                            <Icon
-                                source="chevron-right"
-                                color="#fff"
-                                size={20}
-                            ></Icon>
-                        </Button>
-                    </View>
+                                    <Menu.Item
+                                        onPress={() => {}}
+                                        title="1"
+                                    ></Menu.Item>
+                                    <Menu.Item onPress={() => {}} title="2" />
+                                    <Menu.Item onPress={() => {}} title="3" />
+                                </Menu>
+                            </View>
+                            <View style={{ gap: 20 }}>
+                                {allUpcomingLessons?.rows.map((lesson) => (
+                                    <UpcomingCard
+                                        key={lesson.id}
+                                        lesson={lesson}
+                                    ></UpcomingCard>
+                                ))}
+                            </View>
+                            <View
+                                style={{
+                                    marginBottom: 20,
+                                    flexDirection: "row",
+                                    justifyContent: "space-between",
+                                    alignContent: "center",
+                                }}
+                            >
+                                <Button mode="contained" disabled={true}>
+                                    <Icon
+                                        source="chevron-left"
+                                        color="#fff"
+                                        size={20}
+                                    ></Icon>
+                                </Button>
+                                <Text style={{ alignSelf: "center" }}>
+                                    Page 1 / 2
+                                </Text>
+                                <Button mode="contained">
+                                    <Icon
+                                        source="chevron-right"
+                                        color="#fff"
+                                        size={20}
+                                    ></Icon>
+                                </Button>
+                            </View>
+                        </>
+                    )}
                 </View>
             </ScrollView>
         </SafeAreaView>
