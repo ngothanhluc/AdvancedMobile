@@ -1,26 +1,33 @@
-import React from "react";
-import { View, Text, ScrollView, Pressable } from "react-native";
-import { Menu, Button, Icon } from "react-native-paper";
+import { useQuery } from "@tanstack/react-query";
+import React, { useState } from "react";
+import { Pressable, ScrollView, Text, View } from "react-native";
+import { Button, Icon, Menu } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
+import LoadingOverlay from "../../components/LoadingOverlay";
 import UpcomingCard from "../../components/UpcomingCard";
 import COLORS from "../../constants/Colors";
-import { useQuery } from "@tanstack/react-query";
 import UserAPI from "../../services/UserAPI";
 import type { Booking } from "../../types/booking";
-import LoadingOverlay from "../../components/LoadingOverlay";
 const UpcomingScreen = () => {
     const [visible, setVisible] = React.useState(false);
 
     const openMenu = () => setVisible(true);
 
     const closeMenu = () => setVisible(false);
+
+    const [page, setPage] = useState(1);
+    const [perPage, setPerPage] = useState(5);
     const { data: allUpcomingLessons, isLoading } = useQuery<{
         count: number;
         rows: Booking[];
     }>({
-        queryKey: ["allUpcomingLessons"],
-        queryFn: () => UserAPI.getAllUpcomingLesson({ page: 1, perPage: 9 }),
+        queryKey: ["allUpcomingLessons", page, perPage],
+        queryFn: () =>
+            UserAPI.getAllUpcomingLesson({ page: page, perPage: perPage }),
     });
+    const maxPage = allUpcomingLessons?.count
+        ? Number(Math.ceil(allUpcomingLessons?.count / perPage))
+        : 0;
     if (isLoading) {
         return <LoadingOverlay message={"Loading..."} />;
     }
@@ -37,7 +44,7 @@ const UpcomingScreen = () => {
                     >
                         You have {allUpcomingLessons?.count} upcoming class
                     </Text>
-                    {allUpcomingLessons?.count && (
+                    {allUpcomingLessons?.count != 0 ? (
                         <>
                             <View
                                 style={{
@@ -62,17 +69,32 @@ const UpcomingScreen = () => {
                                             onPress={openMenu}
                                         >
                                             <Text style={{ color: "#fff" }}>
-                                                1
+                                                {perPage}
                                             </Text>
                                         </Pressable>
                                     }
                                 >
                                     <Menu.Item
-                                        onPress={() => {}}
-                                        title="1"
+                                        onPress={() => {
+                                            setPage(1);
+                                            setPerPage(5);
+                                        }}
+                                        title="5"
                                     ></Menu.Item>
-                                    <Menu.Item onPress={() => {}} title="2" />
-                                    <Menu.Item onPress={() => {}} title="3" />
+                                    <Menu.Item
+                                        onPress={() => {
+                                            setPage(1);
+                                            setPerPage(10);
+                                        }}
+                                        title="10"
+                                    />
+                                    <Menu.Item
+                                        onPress={() => {
+                                            setPage(1);
+                                            setPerPage(15);
+                                        }}
+                                        title="15"
+                                    />
                                 </Menu>
                             </View>
                             <View style={{ gap: 20 }}>
@@ -91,7 +113,13 @@ const UpcomingScreen = () => {
                                     alignContent: "center",
                                 }}
                             >
-                                <Button mode="contained" disabled={true}>
+                                <Button
+                                    mode="contained"
+                                    disabled={page == 1 ? true : false}
+                                    onPress={() => {
+                                        setPage(page - 1);
+                                    }}
+                                >
                                     <Icon
                                         source="chevron-left"
                                         color="#fff"
@@ -99,9 +127,15 @@ const UpcomingScreen = () => {
                                     ></Icon>
                                 </Button>
                                 <Text style={{ alignSelf: "center" }}>
-                                    Page 1 / 2
+                                    {`${page} / ${maxPage}`}
                                 </Text>
-                                <Button mode="contained">
+                                <Button
+                                    mode="contained"
+                                    disabled={page == maxPage ? true : false}
+                                    onPress={() => {
+                                        setPage(page + 1);
+                                    }}
+                                >
                                     <Icon
                                         source="chevron-right"
                                         color="#fff"
@@ -110,7 +144,7 @@ const UpcomingScreen = () => {
                                 </Button>
                             </View>
                         </>
-                    )}
+                    ) : null}
                 </View>
             </ScrollView>
         </SafeAreaView>

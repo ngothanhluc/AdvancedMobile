@@ -2,7 +2,19 @@ import React from "react";
 import { View, Text } from "react-native";
 import { Card, Button, Avatar, IconButton } from "react-native-paper";
 import tutorAvatar from "../assets/tutor/keegan-avatar.png";
-const UpcomingCard = () => {
+import { Booking } from "../types/booking";
+const HistoryCard = ({ lesson }: { lesson: Booking }) => {
+    const date = new Date(lesson.scheduleDetailInfo.startPeriodTimestamp);
+    const day = date.toLocaleDateString("en-US", {
+        weekday: "short",
+        year: "numeric",
+        month: "short",
+        day: "numeric",
+    });
+    const time = date.toLocaleTimeString("en-US", {
+        hour: "numeric",
+        minute: "numeric",
+    });
     return (
         <Card style={{ padding: 10, backgroundColor: "#fff" }}>
             <Card.Title
@@ -13,8 +25,8 @@ const UpcomingCard = () => {
                 }
                 subtitle={
                     <View>
-                        <Text>Sat, Oct 28th, 2023</Text>
-                        <Text>02:00 - 02:25</Text>
+                        <Text>{day}</Text>
+                        <Text>{time}</Text>
                     </View>
                 }
                 style={{ paddingBottom: 10 }}
@@ -38,4 +50,4 @@ const UpcomingCard = () => {
     );
 };
 
-export default UpcomingCard;
+export default HistoryCard;

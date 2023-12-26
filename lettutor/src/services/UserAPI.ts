@@ -72,6 +72,22 @@ const UserAPI = {
             Alert.alert("Error", error.response.data.message);
         }
     },
+    getHistoryLessons: async ({
+        page,
+        perPage,
+    }: {
+        page: number;
+        perPage: number;
+    }) => {
+        try {
+            const response = await apiClient.get(
+                `/booking/list/student?page=${page}&perPage=${perPage}&orderBy=meeting&sortBy=desc`
+            );
+            return response.data.data;
+        } catch (error: any) {
+            Alert.alert("Error", error.response.data.message);
+        }
+    },
 };
 
 export default UserAPI;
