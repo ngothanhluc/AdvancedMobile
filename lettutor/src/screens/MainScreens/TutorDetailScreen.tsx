@@ -1,3 +1,4 @@
+import { useQuery } from "@tanstack/react-query";
 import { ResizeMode, Video } from "expo-av";
 import React, { useState } from "react";
 import {
@@ -10,14 +11,12 @@ import {
 } from "react-native";
 import { Button, Icon } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
-import tutorAvatar from "../../assets/tutor/keegan-avatar.png";
+import LoadingOverlay from "../../components/LoadingOverlay";
 import Rate from "../../components/Rate";
 import SpecialtyTag from "../../components/SpecialtyTag";
 import COLORS from "../../constants/Colors";
 import TutorAPI from "../../services/TutorAPI";
-import { useQuery } from "@tanstack/react-query";
 import type TutorDetails from "../../types/tutorDetails";
-import LoadingOverlay from "../../components/LoadingOverlay";
 const TutorDetailScreen = ({ route }: any) => {
     const { tutorID } = route.params;
     const { data: tutor, isLoading } = useQuery<TutorDetails>({

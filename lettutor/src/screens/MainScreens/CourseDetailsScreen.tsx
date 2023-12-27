@@ -3,7 +3,18 @@ import { View, Text, ScrollView, Image, Pressable } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Icon } from "react-native-paper";
 import COLORS from "../../constants/Colors";
-const CourseDetailsScreen = () => {
+import CourseAPI from "../../services/CourseAPI";
+import { useQuery } from "@tanstack/react-query";
+import Course from "../../types/course";
+import courseLevels from "../../constants/CourseLevels";
+import LoadingOverlay from "../../components/LoadingOverlay";
+const CourseDetailsScreen = ({ route }: any) => {
+    const { courseID } = route.params;
+    const { data: course, isLoading } = useQuery<Course>({
+        queryKey: ["course", courseID],
+        queryFn: () => CourseAPI.getCourseDetails(courseID),
+    });
+    if (isLoading) return <LoadingOverlay message="Loading..." />;
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
             <ScrollView>
@@ -14,7 +25,7 @@ const CourseDetailsScreen = () => {
                         objectFit: "cover",
                         marginBottom: 10,
                     }}
-                    source={{ uri: "https://picsum.photos/700" }}
+                    source={{ uri: course?.imageUrl }}
                 ></Image>
                 <View style={{ padding: 10, gap: 20 }}>
                     <View>
@@ -25,12 +36,9 @@ const CourseDetailsScreen = () => {
                                 marginBottom: 10,
                             }}
                         >
-                            Life in the internet Age
+                            {course?.name}
                         </Text>
-                        <Text>
-                            Let's discuss how technology is changing the way we
-                            live
-                        </Text>
+                        <Text>{course?.description}</Text>
                     </View>
                     <View style={{ gap: 10 }}>
                         <Text
@@ -63,11 +71,7 @@ const CourseDetailsScreen = () => {
                                     Why take this course?
                                 </Text>
                                 <Text style={{ lineHeight: 20 }}>
-                                    Lorem ipsum dolor sit amet consectetur
-                                    adipisicing elit. Iusto vel nesciunt neque
-                                    ea, saepe incidunt asperiores sunt minus
-                                    quos voluptas a facere. Voluptate velit iure
-                                    repudiandae cum praesentium ullam quidem.
+                                    {course?.reason}
                                 </Text>
                             </View>
                         </View>
@@ -94,11 +98,7 @@ const CourseDetailsScreen = () => {
                                 What will you be able to do?
                             </Text>
                             <Text style={{ lineHeight: 20 }}>
-                                Lorem ipsum dolor sit amet consectetur
-                                adipisicing elit. Iusto vel nesciunt neque ea,
-                                saepe incidunt asperiores sunt minus quos
-                                voluptas a facere. Voluptate velit iure
-                                repudiandae cum praesentium ullam quidem.
+                                {course?.purpose}
                             </Text>
                         </View>
                     </View>
@@ -125,7 +125,9 @@ const CourseDetailsScreen = () => {
                                     paddingHorizontal: 10,
                                 }}
                             >
-                                Intermediate
+                                {course?.level
+                                    ? courseLevels[course?.level]
+                                    : "Any Level"}
                             </Text>
                         </View>
                     </View>
@@ -152,7 +154,7 @@ const CourseDetailsScreen = () => {
                                     paddingHorizontal: 10,
                                 }}
                             >
-                                9 Topics
+                                {course?.topics.length} Topics
                             </Text>
                         </View>
                     </View>
@@ -167,69 +169,29 @@ const CourseDetailsScreen = () => {
                             List of Topics
                         </Text>
                         <View style={{ gap: 16 }}>
-                            <Pressable
-                                style={{
-                                    paddingVertical: 10,
-                                    paddingHorizontal: 20,
-                                    backgroundColor: COLORS.background,
-                                    borderRadius: 10,
-                                    shadowColor: "#000",
-                                    shadowOffset: {
-                                        width: 2,
-                                        height: 2,
-                                    },
-                                    shadowOpacity: 0.25,
-                                    shadowRadius: 3.84,
-                                    elevation: 2,
-                                }}
-                                onPress={() => {}}
-                            >
-                                <Text style={{ fontSize: 16 }}>
-                                    1. The Internet
-                                </Text>
-                            </Pressable>
-                            <Pressable
-                                style={{
-                                    paddingVertical: 10,
-                                    paddingHorizontal: 20,
-                                    backgroundColor: COLORS.background,
-                                    borderRadius: 10,
-                                    shadowColor: "#000",
-                                    shadowOffset: {
-                                        width: 2,
-                                        height: 2,
-                                    },
-                                    shadowOpacity: 0.25,
-                                    shadowRadius: 3.84,
-                                    elevation: 2,
-                                }}
-                                onPress={() => {}}
-                            >
-                                <Text style={{ fontSize: 16 }}>
-                                    1. The Internet
-                                </Text>
-                            </Pressable>
-                            <Pressable
-                                style={{
-                                    paddingVertical: 10,
-                                    paddingHorizontal: 20,
-                                    backgroundColor: COLORS.background,
-                                    borderRadius: 10,
-                                    shadowColor: "#000",
-                                    shadowOffset: {
-                                        width: 2,
-                                        height: 2,
-                                    },
-                                    shadowOpacity: 0.25,
-                                    shadowRadius: 3.84,
-                                    elevation: 2,
-                                }}
-                                onPress={() => {}}
-                            >
-                                <Text style={{ fontSize: 16 }}>
-                                    1. The Internet
-                                </Text>
-                            </Pressable>
+                            {course?.topics.map((topic) => (
+                                <Pressable
+                                    style={{
+                                        paddingVertical: 10,
+                                        paddingHorizontal: 20,
+                                        backgroundColor: COLORS.background,
+                                        borderRadius: 10,
+                                        shadowColor: "#000",
+                                        shadowOffset: {
+                                            width: 2,
+                                            height: 2,
+                                        },
+                                        shadowOpacity: 0.25,
+                                        shadowRadius: 3.84,
+                                        elevation: 2,
+                                    }}
+                                    onPress={() => {}}
+                                >
+                                    <Text style={{ fontSize: 16 }}>
+                                        {`${topic.orderCourse}. ${topic.name}`}
+                                    </Text>
+                                </Pressable>
+                            ))}
                         </View>
                     </View>
                 </View>

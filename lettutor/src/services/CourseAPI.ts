@@ -1,4 +1,4 @@
-import axiosClient from "./axiosClient";
+import apiClient from "./axiosConfig";
 import React from "react";
 interface getCoursesParams {
     perPage: number;
@@ -14,17 +14,17 @@ const PREFIX = "/course";
 const CourseAPI = {
     getCourses: async ({ page, perPage }: getCoursesParams) => {
         try {
-            const response = await axiosClient.get(
+            const response = await apiClient.get(
                 `${PREFIX}?page=${page}&size=${perPage}`
             );
-            return response.data;
+            return response.data.data;
         } catch (error: any) {
             console.log(error);
         }
     },
     searchCourses: async ({ page, perPage, search }: searchCoursesParams) => {
         try {
-            const response = await axiosClient.get(
+            const response = await apiClient.get(
                 `${PREFIX}?page=${page}&size=${perPage}&q=${search}`
             );
             return response.data;
@@ -34,8 +34,8 @@ const CourseAPI = {
     },
     getCourseDetails: async (id: string) => {
         try {
-            const response = await axiosClient.get(`${PREFIX}/${id}`);
-            return response.data;
+            const response = await apiClient.get(`${PREFIX}/${id}`);
+            return response.data.data;
         } catch (error: any) {
             console.log(error);
         }

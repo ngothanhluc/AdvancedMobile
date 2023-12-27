@@ -2,22 +2,24 @@ import React from "react";
 import { View, Text } from "react-native";
 import { Card, Button, Avatar, IconButton } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
-const CourseCard = () => {
+import Course from "../types/course";
+import courseLevels from "../constants/CourseLevels";
+const CourseCard = ({ course }: { course: Course }) => {
     const navigator = useNavigation();
     return (
         <Card
             style={{ backgroundColor: "white" }}
-            onPress={() => navigator.navigate("Course Details")}
+            onPress={() =>
+                navigator.navigate("Course Details", { courseID: course?.id })
+            }
         >
-            <Card.Cover source={{ uri: "https://picsum.photos/700" }} />
+            <Card.Cover source={{ uri: course?.imageUrl }} />
             <Card.Content>
                 <View style={{ gap: 20, marginVertical: 20 }}>
                     <Text style={{ fontSize: 20, fontWeight: "bold" }}>
-                        Life in the internet Age
+                        {course?.name}
                     </Text>
-                    <Text>
-                        Let's discuss how technology is changing the way we live
-                    </Text>
+                    <Text>{course?.description}</Text>
                     <View
                         style={{
                             flexDirection: "row",
@@ -25,10 +27,10 @@ const CourseCard = () => {
                         }}
                     >
                         <Text style={{ fontSize: 18, color: "grey" }}>
-                            Intermediate
+                            {courseLevels[course?.level]}
                         </Text>
                         <Text style={{ fontSize: 18, color: "grey" }}>
-                            9 lessons
+                            {course?.topics?.length} Topics
                         </Text>
                     </View>
                 </View>
