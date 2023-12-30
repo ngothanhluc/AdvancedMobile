@@ -59,6 +59,9 @@ class _ChatScreenState extends State<ChatScreen> {
               ListTile(
                 title: Text(thread),
                 onTap: () {
+                  setState(() {
+                    chatList = chatThreads[thread]!;
+                  });
                   switchThread(thread);
                   Navigator.pop(context);
                 },
