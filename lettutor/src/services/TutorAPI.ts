@@ -68,5 +68,22 @@ const TutorAPI = {
             Alert.alert("Error", error.response.data.message);
         }
     },
+    reportTutor: async ({
+        tutorId,
+        content,
+    }: {
+        tutorId: string;
+        content: string;
+    }) => {
+        try {
+            const response = await apiClient.post(`/report`, {
+                tutorId,
+                content,
+            });
+            return response.data;
+        } catch (error: any) {
+            Alert.alert("Error", error.response.data.message);
+        }
+    },
 };
 export default TutorAPI;
