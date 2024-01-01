@@ -58,11 +58,7 @@ const EBookScreen = () => {
                             <Menu.Item onPress={() => {}} title="3" />
                         </Menu>
                     </View>
-                    <View style={{ padding: 10, gap: 20 }}>
-                        <CourseCard />
-                        <CourseCard />
-                        <CourseCard />
-                    </View>
+                    <View style={{ padding: 10, gap: 20 }}></View>
                 </View>
             </ScrollView>
         </SafeAreaView>

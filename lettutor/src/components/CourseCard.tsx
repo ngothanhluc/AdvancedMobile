@@ -13,7 +13,12 @@ const CourseCard = ({ course }: { course: Course }) => {
                 navigator.navigate("Course Details", { courseID: course?.id })
             }
         >
-            <Card.Cover source={{ uri: course?.imageUrl }} />
+            {course?.imageUrl ? (
+                <Card.Cover source={{ uri: course?.imageUrl }} />
+            ) : (
+                ""
+            )}
+
             <Card.Content>
                 <View style={{ gap: 20, marginVertical: 20 }}>
                     <Text style={{ fontSize: 20, fontWeight: "bold" }}>

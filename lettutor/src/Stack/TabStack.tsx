@@ -14,6 +14,7 @@ import CourseDetailsScreen from "../screens/MainScreens/CourseDetailsScreen";
 import { Icon } from "react-native-paper";
 import SettingScreen from "../screens/MainScreens/SettingScreen";
 import COLORS from "../constants/Colors";
+import PDFViewScreen from "../screens/MainScreens/PDFViewScreen";
 const TopTab = createMaterialTopTabNavigator();
 const BottomTab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -75,6 +76,7 @@ const CourseBottomTab = () => {
                 name="Course Details"
                 component={CourseDetailsScreen}
             />
+            <Stack.Screen name="PDF View" component={PDFViewScreen} />
         </Stack.Navigator>
     );
 };

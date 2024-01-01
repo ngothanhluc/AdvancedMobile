@@ -8,8 +8,10 @@ import { useQuery } from "@tanstack/react-query";
 import Course from "../../types/course";
 import courseLevels from "../../constants/CourseLevels";
 import LoadingOverlay from "../../components/LoadingOverlay";
+import { useNavigation } from "@react-navigation/native";
 const CourseDetailsScreen = ({ route }: any) => {
     const { courseID } = route.params;
+    const navigator = useNavigation();
     const { data: course, isLoading } = useQuery<Course>({
         queryKey: ["course", courseID],
         queryFn: () => CourseAPI.getCourseDetails(courseID),
@@ -185,7 +187,11 @@ const CourseDetailsScreen = ({ route }: any) => {
                                         shadowRadius: 3.84,
                                         elevation: 2,
                                     }}
-                                    onPress={() => {}}
+                                    onPress={() => {
+                                        navigator.navigate("PDF View", {
+                                            pdfUrl: topic.nameFile,
+                                        });
+                                    }}
                                 >
                                     <Text style={{ fontSize: 16 }}>
                                         {`${topic.orderCourse}. ${topic.name}`}
