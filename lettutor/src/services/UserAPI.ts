@@ -61,8 +61,7 @@ const UserAPI = {
         page: number;
         perPage: number;
     }) => {
-        //const now = Date.now();
-        const now = 1698208779401;
+        const now = Date.now();
         try {
             const response = await apiClient.get(
                 `/booking/list/student?page=${page}&perPage=${perPage}&dateTimeGte=${now}&orderBy=meeting&sortBy=asc`

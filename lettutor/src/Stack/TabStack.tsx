@@ -16,6 +16,7 @@ import SettingScreen from "../screens/MainScreens/SettingScreen";
 import COLORS from "../constants/Colors";
 import PDFViewScreen from "../screens/MainScreens/PDFViewScreen";
 import TutorFeedbacksScreen from "../screens/MainScreens/TutorFeedbacksScreen";
+import BecomeTutorScreen from "../screens/MainScreens/BecomeTutorScreen";
 const TopTab = createMaterialTopTabNavigator();
 const BottomTab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -86,6 +87,19 @@ const CourseBottomTab = () => {
     );
 };
 
+const SettingsBottomTab = () => {
+    return (
+        <Stack.Navigator>
+            <Stack.Screen
+                name="Settings"
+                options={{ headerShown: false }}
+                component={SettingScreen}
+            />
+            <Stack.Screen name="Profile" component={ProfileScreen} />
+            <Stack.Screen name="Become Tutor" component={BecomeTutorScreen} />
+        </Stack.Navigator>
+    );
+};
 export default function BottomTabStack() {
     return (
         <BottomTab.Navigator
@@ -147,7 +161,7 @@ export default function BottomTabStack() {
             />
             <BottomTab.Screen
                 name="Settings"
-                component={SettingScreen}
+                component={SettingsBottomTab}
                 options={{
                     tabBarLabel: "Settings",
                     tabBarIcon: ({ color, size }) => (
