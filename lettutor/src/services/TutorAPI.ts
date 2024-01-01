@@ -5,6 +5,11 @@ interface getTutorsParams {
     perPage: number;
     page?: number;
 }
+interface getFeedbacksParams {
+    tutorId: string;
+    perPage: number;
+    page?: number;
+}
 interface searchTutorsParams {
     page?: number;
     perPage?: number;
@@ -49,6 +54,16 @@ const TutorAPI = {
                 tutorId,
             });
             return response.data;
+        } catch (error: any) {
+            Alert.alert("Error", error.response.data.message);
+        }
+    },
+    getFeedbacks: async ({ tutorId, page, perPage }: getFeedbacksParams) => {
+        try {
+            const response = await apiClient.get(
+                `/feedback/v2/${tutorId}?perPage=${perPage}&page=${page}`
+            );
+            return response.data.data;
         } catch (error: any) {
             Alert.alert("Error", error.response.data.message);
         }

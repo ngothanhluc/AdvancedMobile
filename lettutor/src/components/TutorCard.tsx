@@ -37,10 +37,10 @@ const TutorCard = ({ bookAble, tutor }: Props) => {
     const handleBookClick = () => {
         navigator.navigate("Tutor Detail", { tutorID: tutor.userId });
     };
-    const handleFavorite = () => {
+    const handleFavorite = async () => {
         try {
-            const response = TutorAPI.addFavoriteTutor(tutor.userId);
-            if (response.result === 1) {
+            const response = await TutorAPI.addFavoriteTutor(tutor.userId);
+            if (typeof response.result == "number") {
                 setIsFavoriteTutor(false);
             } else {
                 setIsFavoriteTutor(true);

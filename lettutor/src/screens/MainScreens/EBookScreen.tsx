@@ -1,6 +1,5 @@
 import React from "react";
 import { View, Text, ScrollView, Pressable } from "react-native";
-import CourseCard from "../../components/CourseCard";
 import { SafeAreaView } from "react-native-safe-area-context";
 import COLORS from "../../constants/Colors";
 import { Menu, Searchbar } from "react-native-paper";

@@ -1,3 +1,5 @@
+import { AntDesign } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
 import { useQuery } from "@tanstack/react-query";
 import { ResizeMode, Video } from "expo-av";
 import React, { useState } from "react";
@@ -19,28 +21,36 @@ import TutorAPI from "../../services/TutorAPI";
 import type TutorDetails from "../../types/tutorDetails";
 const TutorDetailScreen = ({ route }: any) => {
     const { tutorID } = route.params;
+    const navigator = useNavigation();
     const { data: tutor, isLoading } = useQuery<TutorDetails>({
         queryKey: ["tutorDetail", tutorID],
         queryFn: () => TutorAPI.getTutorByID(tutorID),
     });
+    const [isFavorite, setIsFavorite] = useState(tutor?.isFavorite); // TODO: get from API
     const [rating, setRating] = useState(4);
     const specialties =
         "business-english,conversational-english,english-for-kids,ielts,starters,movers,flyers,ket,pet,toefl,toeic";
     const specialtiesArray = specialties.split(",");
-    const bio =
-        "I am passionate about running and fitness, I often compete in trail/mountain running events and I love pushing myself. I am training to one day take part in ultra-endurance events. I also enjoy watching rugby on the weekends, reading and watching podcasts on Youtube. My most memorable life experience would be living in and traveling around Southeast Asia.";
-    const interests =
-        " I loved the weather, the scenery and the laid-back lifestyle of the locals.";
-    const experience =
-        "I have more than 10 years of teaching english experience";
     const handleRating = (rating) => {
         setRating(rating);
     };
-    const handleFavoritePress = () => {
-        console.log("Favorite pressed");
+    const handleFavoritePress = async () => {
+        try {
+            const response = await TutorAPI.addFavoriteTutor(tutorID);
+            if (response.result === 1) {
+                setIsFavorite(false);
+            } else {
+                setIsFavorite(true);
+            }
+        } catch (error) {
+            Alert.alert("Error", error.response.data.message);
+        }
     };
     const video = React.useRef(null);
     const [status, setStatus] = useState({});
+    const handleReviewButtonPress = () => {
+        navigator.navigate("Tutor Feedbacks", { tutorID: tutorID });
+    };
     if (isLoading) {
         return <LoadingOverlay message={"Loading Tutor Details..."} />;
     }
@@ -133,11 +143,20 @@ const TutorDetailScreen = ({ route }: any) => {
                                     alignItems: "center",
                                 }}
                             >
-                                <Icon
-                                    color={COLORS.primary}
-                                    source="cards-heart-outline"
-                                    size={30}
-                                />
+                                {isFavorite ? (
+                                    <AntDesign
+                                        name="heart"
+                                        size={30}
+                                        color="red"
+                                    />
+                                ) : (
+                                    <AntDesign
+                                        name="hearto"
+                                        size={30}
+                                        color={COLORS.primary}
+                                    />
+                                )}
+
                                 <Text
                                     style={{
                                         fontWeight: "bold",
@@ -148,7 +167,7 @@ const TutorDetailScreen = ({ route }: any) => {
                                 </Text>
                             </View>
                         </Pressable>
-                        <Pressable onPress={handleFavoritePress}>
+                        <Pressable onPress={handleReviewButtonPress}>
                             <View
                                 style={{
                                     flexDirection: "column",
@@ -171,7 +190,7 @@ const TutorDetailScreen = ({ route }: any) => {
                                 </Text>
                             </View>
                         </Pressable>
-                        <Pressable onPress={handleFavoritePress}>
+                        <Pressable onPress={() => {}}>
                             <View
                                 style={{
                                     flexDirection: "column",

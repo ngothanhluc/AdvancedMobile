@@ -15,6 +15,7 @@ import { Icon } from "react-native-paper";
 import SettingScreen from "../screens/MainScreens/SettingScreen";
 import COLORS from "../constants/Colors";
 import PDFViewScreen from "../screens/MainScreens/PDFViewScreen";
+import TutorFeedbacksScreen from "../screens/MainScreens/TutorFeedbacksScreen";
 const TopTab = createMaterialTopTabNavigator();
 const BottomTab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -27,6 +28,10 @@ const HomeBottomTab = () => {
                 options={{ headerShown: false }}
             />
             <Stack.Screen name="Tutor Detail" component={TutorDetailScreen} />
+            <Stack.Screen
+                name="Tutor Feedbacks"
+                component={TutorFeedbacksScreen}
+            />
         </Stack.Navigator>
     );
 };

@@ -149,5 +149,5 @@ interface TutorInfo {
     createdAt: string; // ISO 8601 date string
     updatedAt: string; // ISO 8601 date string
 }
-export type { Tutor, FavoriteTutor };
+export type { Tutor, FavoriteTutor, Feedback };
 export default Tutor;

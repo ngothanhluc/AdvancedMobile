@@ -2,6 +2,8 @@ import React from "react";
 import { View, Text } from "react-native";
 import COLORS from "../constants/Colors";
 const SpecialtyTag = (props) => {
+    const specialty = props.specialty.replaceAll("-", " ");
+
     return (
         <View
             style={{
@@ -21,7 +23,7 @@ const SpecialtyTag = (props) => {
                     fontWeight: "bold",
                 }}
             >
-                {props.specialty}
+                {specialty}
             </Text>
         </View>
     );
