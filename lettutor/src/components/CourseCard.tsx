@@ -10,7 +10,9 @@ const CourseCard = ({ course }: { course: Course }) => {
         <Card
             style={{ backgroundColor: "white" }}
             onPress={() =>
-                navigator.navigate("Course Details", { courseID: course?.id })
+                navigator.navigate("Course Details", {
+                    courseID: course?.id,
+                })
             }
         >
             {course?.imageUrl ? (

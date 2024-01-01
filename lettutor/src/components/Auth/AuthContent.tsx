@@ -38,12 +38,36 @@ const AuthContent = ({ isLogin, isForgotPassword, onAuthenticate }) => {
         const passwordIsValid = password.length > 5;
         const emailsAreEqual = email === confirmEmail;
         const passwordsAreEqual = password === confirmPassword;
-        if (isForgotPassword) {
+        if (isLogin && !isForgotPassword) {
             if (!emailIsValid) {
+                Alert.alert("Invalid input", "Email must be a valid email");
+                setCredentialsInvalid({
+                    email: !emailIsValid,
+                    confirmEmail: !emailIsValid || !emailsAreEqual,
+                    password: !passwordIsValid,
+                    confirmPassword: !passwordIsValid || !passwordsAreEqual,
+                });
+                return;
+            }
+            if (!passwordIsValid) {
                 Alert.alert(
                     "Invalid input",
-                    "Please check your entered credentials."
+                    "Password must be at least 6 characters"
                 );
+                setCredentialsInvalid({
+                    email: !emailIsValid,
+                    confirmEmail: !emailIsValid || !emailsAreEqual,
+                    password: !passwordIsValid,
+                    confirmPassword: !passwordIsValid || !passwordsAreEqual,
+                });
+                return;
+            }
+            onAuthenticate({ email, password });
+            return;
+        }
+        if (isForgotPassword) {
+            if (!emailIsValid) {
+                Alert.alert("Invalid input", "Email must be a valid email");
                 setCredentialsInvalid({
                     email: !emailIsValid,
                     confirmEmail: !emailIsValid || !emailsAreEqual,
@@ -54,6 +78,51 @@ const AuthContent = ({ isLogin, isForgotPassword, onAuthenticate }) => {
             }
             onAuthenticate({ email });
             return;
+        }
+        if (!isLogin && !isForgotPassword) {
+            if (!emailIsValid) {
+                Alert.alert("Invalid input", "Email must be a valid email");
+                setCredentialsInvalid({
+                    email: !emailIsValid,
+                    confirmEmail: !emailIsValid || !emailsAreEqual,
+                    password: !passwordIsValid,
+                    confirmPassword: !passwordIsValid || !passwordsAreEqual,
+                });
+                return;
+            }
+            if (!emailsAreEqual) {
+                Alert.alert("Invalid input", "Emails must be the same");
+                setCredentialsInvalid({
+                    email: !emailIsValid,
+                    confirmEmail: !emailIsValid || !emailsAreEqual,
+                    password: !passwordIsValid,
+                    confirmPassword: !passwordIsValid || !passwordsAreEqual,
+                });
+                return;
+            }
+            if (!passwordIsValid) {
+                Alert.alert(
+                    "Invalid input",
+                    "Password must be at least 6 characters"
+                );
+                setCredentialsInvalid({
+                    email: !emailIsValid,
+                    confirmEmail: !emailIsValid || !emailsAreEqual,
+                    password: !passwordIsValid,
+                    confirmPassword: !passwordIsValid || !passwordsAreEqual,
+                });
+                return;
+            }
+            if (!passwordsAreEqual) {
+                Alert.alert("Invalid input", "Passwords must be the same");
+                setCredentialsInvalid({
+                    email: !emailIsValid,
+                    confirmEmail: !emailIsValid || !emailsAreEqual,
+                    password: !passwordIsValid,
+                    confirmPassword: !passwordIsValid || !passwordsAreEqual,
+                });
+                return;
+            }
         }
         if (
             !emailIsValid ||
