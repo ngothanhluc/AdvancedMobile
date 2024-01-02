@@ -21,7 +21,7 @@ const FeedbackCard = ({ feedback }: { feedback: Feedback }) => {
                 subtitle={
                     <View style={{ gap: 10 }}>
                         <Text>{feedback.content}</Text>
-                        <Rate rating={feedback.rating} />
+                        <Rate rating={feedback.rating} disabled={true} />
                     </View>
                 }
                 style={{ paddingBottom: 10 }}
