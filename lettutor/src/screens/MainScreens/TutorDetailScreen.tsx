@@ -432,7 +432,11 @@ const TutorDetailScreen = ({ route }: any) => {
                         </View>
                         <Button
                             mode="outlined"
-                            onPress={() => console.log("Book a lesson")}
+                            onPress={() =>
+                                navigator.navigate("Choose Learning Date", {
+                                    tutorId: tutorID,
+                                })
+                            }
                         >
                             Book a lesson
                         </Button>

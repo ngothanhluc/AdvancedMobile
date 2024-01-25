@@ -16,6 +16,8 @@ import SettingScreen from "../screens/MainScreens/SettingScreen";
 import PDFViewScreen from "../screens/MainScreens/PDFViewScreen";
 import TutorFeedbacksScreen from "../screens/MainScreens/TutorFeedbacksScreen";
 import BecomeTutorScreen from "../screens/MainScreens/BecomeTutorScreen";
+import ChooseLearningDateScreen from "../screens/MainScreens/ChooseLearningDateScreen";
+import ChooseLearningTimeScreen from "../screens/MainScreens/ChooseLearningTimeScreen";
 const TopTab = createMaterialTopTabNavigator();
 const BottomTab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -28,6 +30,14 @@ const HomeBottomTab = () => {
                 options={{ headerShown: false }}
             />
             <Stack.Screen name="Tutor Detail" component={TutorDetailScreen} />
+            <Stack.Screen
+                name="Choose Learning Date"
+                component={ChooseLearningDateScreen}
+            />
+            <Stack.Screen
+                name="Choose Learning Time"
+                component={ChooseLearningTimeScreen}
+            />
             <Stack.Screen
                 name="Tutor Feedbacks"
                 component={TutorFeedbacksScreen}

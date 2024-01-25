@@ -66,10 +66,13 @@ const ProfileScreen = () => {
                         alignItems: "center",
                     }}
                 >
-                    <Avatar.Image
-                        size={100}
-                        source={{ uri: rawUserInfo?.user?.avatar }}
-                    ></Avatar.Image>
+                    {rawUserInfo?.user?.avatar && (
+                        <Avatar.Image
+                            size={100}
+                            source={{ uri: rawUserInfo?.user?.avatar }}
+                        ></Avatar.Image>
+                    )}
+
                     <TextInput
                         label="Name"
                         value={userInfo?.name}
