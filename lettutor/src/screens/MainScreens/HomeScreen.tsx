@@ -28,6 +28,7 @@ const HomeScreen = () => {
     const { data: tutors, isLoading } = useQuery<Tutor[]>({
         queryKey: ["tutorsHomePage"],
         queryFn: () => TutorAPI.getTutors({ perPage: 9, page: 1 }),
+        staleTime: 0,
     });
     const { data: learnTopics } = useQuery<Specialty[]>({
         queryKey: ["learnTopics"],

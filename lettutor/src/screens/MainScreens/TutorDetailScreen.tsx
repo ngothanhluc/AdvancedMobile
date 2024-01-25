@@ -35,6 +35,7 @@ const TutorDetailScreen = ({ route }: any) => {
     const { data: tutor, isLoading } = useQuery<TutorDetails>({
         queryKey: ["tutorDetail", tutorID],
         queryFn: () => TutorAPI.getTutorByID(tutorID),
+        staleTime: 0,
     });
     const [isFavorite, setIsFavorite] = useState(tutor?.isFavorite); // TODO: get from API
     const [rating, setRating] = useState(4);

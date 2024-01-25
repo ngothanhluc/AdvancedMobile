@@ -30,6 +30,10 @@
                 "projectId": "0cab920c-31f5-4ebe-b62e-811392dccc5a"
             }
         },
+        "plugins": [
+            "@config-plugins/react-native-blob-util",
+            "@config-plugins/react-native-pdf"
+        ],
         "owner": "ngothanhluc"
     }
 }

@@ -87,6 +87,35 @@ const UserAPI = {
             Alert.alert("Error", error.response.data.message);
         }
     },
+    updateUserInfo: async ({
+        name,
+        country,
+        birthday,
+        level,
+        learnTopics,
+        testPreparations,
+    }: {
+        name: string;
+        country: string;
+        birthday: string;
+        level: string;
+        learnTopics: string[];
+        testPreparations: string[];
+    }) => {
+        try {
+            const response = await apiClient.put("/user/info", {
+                name,
+                country,
+                birthday,
+                level,
+                learnTopics,
+                testPreparations,
+            });
+            return response.data;
+        } catch (error: any) {
+            Alert.alert("Error", error.response.data.message);
+        }
+    },
 };
 
 export default UserAPI;

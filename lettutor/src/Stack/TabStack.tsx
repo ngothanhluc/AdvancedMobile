@@ -13,7 +13,6 @@ import EBookScreen from "../screens/MainScreens/EBookScreen";
 import CourseDetailsScreen from "../screens/MainScreens/CourseDetailsScreen";
 import { Icon } from "react-native-paper";
 import SettingScreen from "../screens/MainScreens/SettingScreen";
-import COLORS from "../constants/Colors";
 import PDFViewScreen from "../screens/MainScreens/PDFViewScreen";
 import TutorFeedbacksScreen from "../screens/MainScreens/TutorFeedbacksScreen";
 import BecomeTutorScreen from "../screens/MainScreens/BecomeTutorScreen";
@@ -160,7 +159,7 @@ export default function BottomTabStack() {
                 }}
             />
             <BottomTab.Screen
-                name="Settings"
+                name="SettingsBottomTab"
                 component={SettingsBottomTab}
                 options={{
                     tabBarLabel: "Settings",

@@ -25,6 +25,7 @@ const TutorSearchResultScreen = ({ route }) => {
         queryKey: ["tutorsSearchResult", page, perPage, route.params],
         queryFn: () =>
             TutorAPI.searchTutors({ page, perPage, ...route.params }),
+        staleTime: 0,
     });
     if (isLoading) {
         return <LoadingOverlay message={"Loading..."} />;
