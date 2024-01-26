@@ -1,0 +1,21 @@
+{
+    "Invalid input": "Dữ liệu không hợp lệ",
+    "Email must be a valid email": "Email phải là một email hợp lệ",
+    "Password must be at least 6 characters": "Mật khẩu phải có ít nhất 6 ký tự",
+    "Emails must be the same": "Email phải giống nhau",
+    "Passwords must be the same": "Mật khẩu phải giống nhau",
+    "Please check your entered credentials.": "Vui lòng kiểm tra lại thông tin đăng nhập của bạn.",
+    "Forgot Password?": "Quên mật khẩu?",
+    "Not a member yet?": "Chưa có tài khoản?",
+    "Already a member?": "Đã có tài khoản?",
+    "Register": "Đăng ký",
+    "Login": "Đăng nhập",
+    "Or continue with": "Hoặc tiếp tục với",
+    "Please check your email to reset your password": "Vui lòng kiểm tra email của bạn để đặt lại mật khẩu.",
+    "Success": "Thành công",
+    "Forgot password failed": "Quên mật khẩu thất bại",
+    "Send Recovery Email": "Gửi email khôi phục",
+    "Log In": "Đăng nhập",
+    "Sign Up": "Đăng ký",
+    "Back to Login": "Quay lại đăng nhập"
+}

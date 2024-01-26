@@ -4,7 +4,9 @@ import { Pressable, StyleSheet, Text, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import COLORS from "../../constants/Colors";
 import Input from "./Input";
+import { useTranslation } from "react-i18next";
 function AuthForm({ isLogin, isForgotPassword, onSubmit, credentialsInvalid }) {
+    const { t } = useTranslation();
     const navigation = useNavigation();
     const [enteredEmail, setEnteredEmail] = useState("");
     const [enteredConfirmEmail, setEnteredConfirmEmail] = useState("");
@@ -107,10 +109,10 @@ function AuthForm({ isLogin, isForgotPassword, onSubmit, credentialsInvalid }) {
                     }}
                 >
                     {isForgotPassword
-                        ? "Send Recovery Email"
+                        ? t("Send Recovery Email")
                         : isLogin
-                        ? "Log In"
-                        : "Sign Up"}
+                        ? t("Log In")
+                        : t("Sign Up")}
                 </Text>
             </Pressable>
             {isForgotPassword && (
@@ -127,7 +129,7 @@ function AuthForm({ isLogin, isForgotPassword, onSubmit, credentialsInvalid }) {
                             fontSize: 16,
                         }}
                     >
-                        Back to Login
+                        {t("Back to Login")}
                     </Text>
                 </Pressable>
             )}

@@ -1,0 +1,21 @@
+{
+    "Invalid input": "Invalid input",
+    "Email must be a valid email": "Email must be a valid email",
+    "Password must be at least 6 characters": "Password must be at least 6 characters",
+    "Emails must be the same": "Emails must be the same",
+    "Passwords must be the same": "Passwords must be the same",
+    "Please check your entered credentials.": "Please check your entered credentials.",
+    "Forgot Password?": "Forgot Password?",
+    "Not a member yet?": "Not a member yet?",
+    "Already a member?": "Already a member?",
+    "Register": "Register",
+    "Login": "Login",
+    "Or continue with": "Or continue with",
+    "Please check your email to reset your password": "Please check your email to reset your password",
+    "Success": "Success",
+    "Forgot password failed": "Forgot password failed",
+    "Send Recovery Email": "Send Recovery Email",
+    "Log In": "Log In",
+    "Sign Up": "Sign Up",
+    "Back to Login": "Back to Login"
+}

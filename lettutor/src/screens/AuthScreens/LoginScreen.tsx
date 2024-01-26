@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, View, Alert } from "react-native";
+import { StyleSheet, View, Alert, ScrollView } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import AuthContent from "../../components/Auth/AuthContent";
 import AuthAPI from "../../services/AuthAPI";

@@ -6,6 +6,7 @@ import { store } from "./store";
 import { Provider } from "react-redux";
 import MainStack from "./src/Stack/MainStack";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import "./src/i18n/i18n.config";
 const queryClient = new QueryClient();
 const theme = {
     ...MD3LightTheme,
@@ -19,7 +20,6 @@ const theme = {
         background: COLORS.background,
     },
 };
-// const queryClient = new QueryClient();
 export default function App() {
     return (
         <Provider store={store}>

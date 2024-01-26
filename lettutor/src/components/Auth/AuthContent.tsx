@@ -7,13 +7,28 @@ import googleLogo from "../../assets/logo/google.png";
 import lettutor2 from "../../assets/logo/lettutor2.png";
 import COLORS from "../../constants/Colors";
 import AuthForm from "./AuthForm";
+import { useTranslation } from "react-i18next";
+import { changeLanguage } from "../../redux/reducers/languageSlice";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 const AuthContent = ({ isLogin, isForgotPassword, onAuthenticate }) => {
+    const language = useSelector(
+        (state: any) => state.appReducers.language.language
+    );
+
+    const dispatch = useDispatch();
+    const { t, i18n } = useTranslation();
+    const changeLang = (lng) => {
+        i18n.changeLanguage(lng);
+        dispatch(changeLanguage(lng));
+    };
+
     const navigation = useNavigation();
     const [open, setOpen] = useState(false);
-    const [languageValue, setLanguageValue] = useState("vi");
+    const [languageValue, setLanguageValue] = useState(language);
     const [chooseLanguage, setChooseLanguage] = useState([
-        { label: "Tiếng Việt", value: "vi" },
         { label: "English", value: "en" },
+        { label: "Tiếng Việt", value: "vn" },
     ]);
     const [credentialsInvalid, setCredentialsInvalid] = useState({
         email: false,
@@ -21,7 +36,6 @@ const AuthContent = ({ isLogin, isForgotPassword, onAuthenticate }) => {
         confirmEmail: false,
         confirmPassword: false,
     });
-
     function switchAuthModeHandler() {
         if (isLogin) {
             navigation.navigate("Register");
@@ -40,7 +54,10 @@ const AuthContent = ({ isLogin, isForgotPassword, onAuthenticate }) => {
         const passwordsAreEqual = password === confirmPassword;
         if (isLogin && !isForgotPassword) {
             if (!emailIsValid) {
-                Alert.alert("Invalid input", "Email must be a valid email");
+                Alert.alert(
+                    t("Invalid input"),
+                    t("Email must be a valid email")
+                );
                 setCredentialsInvalid({
                     email: !emailIsValid,
                     confirmEmail: !emailIsValid || !emailsAreEqual,
@@ -51,8 +68,8 @@ const AuthContent = ({ isLogin, isForgotPassword, onAuthenticate }) => {
             }
             if (!passwordIsValid) {
                 Alert.alert(
-                    "Invalid input",
-                    "Password must be at least 6 characters"
+                    t("Invalid input"),
+                    t("Password must be at least 6 characters")
                 );
                 setCredentialsInvalid({
                     email: !emailIsValid,
@@ -67,7 +84,10 @@ const AuthContent = ({ isLogin, isForgotPassword, onAuthenticate }) => {
         }
         if (isForgotPassword) {
             if (!emailIsValid) {
-                Alert.alert("Invalid input", "Email must be a valid email");
+                Alert.alert(
+                    t("Invalid input"),
+                    t("Email must be a valid email")
+                );
                 setCredentialsInvalid({
                     email: !emailIsValid,
                     confirmEmail: !emailIsValid || !emailsAreEqual,
@@ -81,7 +101,10 @@ const AuthContent = ({ isLogin, isForgotPassword, onAuthenticate }) => {
         }
         if (!isLogin && !isForgotPassword) {
             if (!emailIsValid) {
-                Alert.alert("Invalid input", "Email must be a valid email");
+                Alert.alert(
+                    t("Invalid input"),
+                    t("Email must be a valid email")
+                );
                 setCredentialsInvalid({
                     email: !emailIsValid,
                     confirmEmail: !emailIsValid || !emailsAreEqual,
@@ -91,7 +114,7 @@ const AuthContent = ({ isLogin, isForgotPassword, onAuthenticate }) => {
                 return;
             }
             if (!emailsAreEqual) {
-                Alert.alert("Invalid input", "Emails must be the same");
+                Alert.alert(t("Invalid input"), t("Emails must be the same"));
                 setCredentialsInvalid({
                     email: !emailIsValid,
                     confirmEmail: !emailIsValid || !emailsAreEqual,
@@ -102,8 +125,8 @@ const AuthContent = ({ isLogin, isForgotPassword, onAuthenticate }) => {
             }
             if (!passwordIsValid) {
                 Alert.alert(
-                    "Invalid input",
-                    "Password must be at least 6 characters"
+                    t("Invalid input"),
+                    t("Password must be at least 6 characters")
                 );
                 setCredentialsInvalid({
                     email: !emailIsValid,
@@ -114,7 +137,10 @@ const AuthContent = ({ isLogin, isForgotPassword, onAuthenticate }) => {
                 return;
             }
             if (!passwordsAreEqual) {
-                Alert.alert("Invalid input", "Passwords must be the same");
+                Alert.alert(
+                    t("Invalid input"),
+                    t("Passwords must be the same")
+                );
                 setCredentialsInvalid({
                     email: !emailIsValid,
                     confirmEmail: !emailIsValid || !emailsAreEqual,
@@ -130,8 +156,8 @@ const AuthContent = ({ isLogin, isForgotPassword, onAuthenticate }) => {
             (!isLogin && (!emailsAreEqual || !passwordsAreEqual))
         ) {
             Alert.alert(
-                "Invalid input",
-                "Please check your entered credentials."
+                t("Invalid input"),
+                t("Please check your entered credentials.")
             );
             setCredentialsInvalid({
                 email: !emailIsValid,
@@ -164,6 +190,9 @@ const AuthContent = ({ isLogin, isForgotPassword, onAuthenticate }) => {
                 setOpen={setOpen}
                 setValue={setLanguageValue}
                 setItems={setChooseLanguage}
+                onChangeValue={(value) => {
+                    changeLang(value);
+                }}
             ></DropDownPicker>
             <Image source={lettutor2}></Image>
             <AuthForm
@@ -183,13 +212,13 @@ const AuthContent = ({ isLogin, isForgotPassword, onAuthenticate }) => {
                             fontSize: 16,
                         }}
                     >
-                        Forgot Password
+                        {t("Forgot Password?")}
                     </Text>
                 </Pressable>
             )}
             {!isForgotPassword && (
                 <>
-                    <Text>Or continue with</Text>
+                    <Text>{t("Or continue with")}</Text>
                     <View style={{ flexDirection: "row", gap: 10 }}>
                         <Pressable onPress={handleFacebookLogin}>
                             <Image
@@ -213,8 +242,8 @@ const AuthContent = ({ isLogin, isForgotPassword, onAuthenticate }) => {
                     >
                         <Text>
                             {isLogin
-                                ? "Not a member yet?"
-                                : "Already a member?"}
+                                ? t("Not a member yet?")
+                                : t("Already a member?")}
                         </Text>
                         <Pressable onPress={switchAuthModeHandler}>
                             <Text
@@ -224,7 +253,7 @@ const AuthContent = ({ isLogin, isForgotPassword, onAuthenticate }) => {
                                     fontSize: 16,
                                 }}
                             >
-                                {isLogin ? "Register" : "Login"}
+                                {isLogin ? t("Register") : t("Login")}
                             </Text>
                         </Pressable>
                     </View>
