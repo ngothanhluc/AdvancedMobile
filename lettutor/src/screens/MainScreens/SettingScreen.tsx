@@ -29,7 +29,7 @@ const SettingScreen = () => {
                         size={100}
                         source={{ uri: user?.avatar }}
                     ></Avatar.Image>
-                    <Text style={{ fontSize: 20 }}>Ph Hai</Text>
+                    <Text style={{ fontSize: 20 }}>{user?.name}</Text>
                     <Button
                         onPress={() => {
                             navigator.navigate("Profile");

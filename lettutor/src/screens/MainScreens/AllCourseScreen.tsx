@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Pressable, ScrollView, Text, View } from "react-native";
 import { Menu, Searchbar } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -10,29 +10,48 @@ import type { Course } from "../../types/course";
 import { Button } from "react-native-paper";
 import LoadingOverlay from "../../components/LoadingOverlay";
 import { Icon } from "react-native-paper";
+
 const AllCourseScreen = () => {
     const [visible, setVisible] = React.useState(false);
     const [page, setPage] = useState(1);
     const [perPage, setPerPage] = useState(5);
+    const [searchQuery, setSearchQuery] = React.useState("");
 
     const openMenu = () => setVisible(true);
 
     const closeMenu = () => setVisible(false);
 
-    const [searchQuery, setSearchQuery] = React.useState("");
+    const handleSearchPress = async () => {
+        const res = await CourseAPI.searchCourses({
+            page: page,
+            perPage: perPage,
+            search: searchQuery,
+        });
+        setRawCoursesList(res.data);
+    };
+    const [rawCoursesList, setRawCoursesList] = React.useState<{
+        count: number;
+        rows: Course[];
+    }>();
 
-    const { data: rawCoursesList, isLoading } = useQuery<{
+    const { data: dataRawCoursesList, isLoading } = useQuery<{
         count: number;
         rows: Course[];
     }>({
         queryKey: ["courses", page, perPage],
         queryFn: () => CourseAPI.getCourses({ page, perPage }),
     });
+
     const onChangeSearch = (query) => setSearchQuery(query);
+
+    if (isLoading) return <LoadingOverlay message="Loading..." />;
+
     const maxPage = rawCoursesList?.count
         ? Number(Math.ceil(rawCoursesList?.count / perPage))
         : 0;
-    if (isLoading) return <LoadingOverlay message="Loading..." />;
+    useEffect(() => {
+        setRawCoursesList(dataRawCoursesList);
+    }, []);
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
             <ScrollView style={{ padding: 20 }}>
@@ -44,6 +63,7 @@ const AllCourseScreen = () => {
                         placeholder="Search Course"
                         value={searchQuery}
                         onChangeText={onChangeSearch}
+                        onIconPress={handleSearchPress}
                     />
                     <View
                         style={{
