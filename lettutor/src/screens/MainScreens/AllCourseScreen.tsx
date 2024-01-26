@@ -7,8 +7,9 @@ import CourseCard from "../../components/CourseCard";
 import COLORS from "../../constants/Colors";
 import CourseAPI from "../../services/CourseAPI";
 import type { Course } from "../../types/course";
-import { Button, Icon } from "react-native-paper";
+import { Button } from "react-native-paper";
 import LoadingOverlay from "../../components/LoadingOverlay";
+import { Icon } from "react-native-paper";
 const AllCourseScreen = () => {
     const [visible, setVisible] = React.useState(false);
     const [page, setPage] = useState(1);

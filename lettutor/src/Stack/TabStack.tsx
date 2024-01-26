@@ -18,6 +18,7 @@ import TutorFeedbacksScreen from "../screens/MainScreens/TutorFeedbacksScreen";
 import BecomeTutorScreen from "../screens/MainScreens/BecomeTutorScreen";
 import ChooseLearningDateScreen from "../screens/MainScreens/ChooseLearningDateScreen";
 import ChooseLearningTimeScreen from "../screens/MainScreens/ChooseLearningTimeScreen";
+import ClassScreen from "../screens/MainScreens/ClassScreen";
 const TopTab = createMaterialTopTabNavigator();
 const BottomTab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -63,10 +64,30 @@ const TutorsBottomTab = () => {
         </Stack.Navigator>
     );
 };
+const UpcomingBottomTab = () => {
+    return (
+        <Stack.Navigator>
+            <Stack.Screen
+                name="Upcoming"
+                component={UpcomingScreen}
+                options={{ headerShown: false }}
+            />
+            <Stack.Screen
+                name="Class"
+                component={ClassScreen}
+                options={{ title: "" }}
+            />
+        </Stack.Navigator>
+    );
+};
 const ScheduleBottomTab = () => {
     return (
         <TopTab.Navigator>
-            <TopTab.Screen name="Upcoming" component={UpcomingScreen} />
+            <TopTab.Screen
+                name="Upcoming Bottom Tab"
+                options={{ title: "Upcoming" }}
+                component={UpcomingBottomTab}
+            />
             <TopTab.Screen name="History" component={HistoryScreen} />
         </TopTab.Navigator>
     );

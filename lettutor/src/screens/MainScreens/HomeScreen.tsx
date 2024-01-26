@@ -12,7 +12,9 @@ import TutorAPI from "../../services/TutorAPI";
 import UserAPI from "../../services/UserAPI";
 import type Tutor from "../../types/tutor";
 import type { Booking } from "../../types/booking";
+import { useNavigation } from "@react-navigation/native";
 const HomeScreen = () => {
+    const navigator = useNavigation();
     const dispatch = useDispatch();
     const handleEnterLessonRoom = () => {
         console.log("Enter Lesson Room");

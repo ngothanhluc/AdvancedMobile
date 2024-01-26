@@ -1,14 +1,22 @@
 import { useQuery } from "@tanstack/react-query";
 import React, { useState } from "react";
-import { Pressable, ScrollView, Text, View } from "react-native";
-import { Button, Icon, Menu } from "react-native-paper";
+import {
+    Pressable,
+    ScrollView,
+    Text,
+    View,
+    RefreshControl,
+} from "react-native";
+import { Button, Menu, Icon } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
 import LoadingOverlay from "../../components/LoadingOverlay";
 import UpcomingCard from "../../components/UpcomingCard";
 import COLORS from "../../constants/Colors";
 import UserAPI from "../../services/UserAPI";
 import type { Booking } from "../../types/booking";
+import { useQueryClient } from "@tanstack/react-query";
 const UpcomingScreen = () => {
+    const queryClient = useQueryClient();
     const [visible, setVisible] = React.useState(false);
 
     const openMenu = () => setVisible(true);
@@ -17,6 +25,15 @@ const UpcomingScreen = () => {
 
     const [page, setPage] = useState(1);
     const [perPage, setPerPage] = useState(5);
+    const [refreshing, setRefreshing] = React.useState(false);
+
+    const onRefresh = React.useCallback(() => {
+        setRefreshing(true);
+        queryClient.invalidateQueries("allUpcomingLessons");
+        setTimeout(() => {
+            setRefreshing(false);
+        }, 1000);
+    }, []);
     const { data: allUpcomingLessons, isLoading } = useQuery<{
         count: number;
         rows: Booking[];
@@ -33,7 +50,15 @@ const UpcomingScreen = () => {
     }
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
-            <ScrollView style={{ padding: 20 }}>
+            <ScrollView
+                style={{ padding: 20 }}
+                refreshControl={
+                    <RefreshControl
+                        refreshing={refreshing}
+                        onRefresh={onRefresh}
+                    />
+                }
+            >
                 <View style={{ gap: 20 }}>
                     <Text
                         style={{

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Pressable, ScrollView, Text, View } from "react-native";
-import { Button, Icon, Menu } from "react-native-paper";
+import { Button, Menu, Icon } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
 import COLORS from "../../constants/Colors";
 import { useQuery } from "@tanstack/react-query";

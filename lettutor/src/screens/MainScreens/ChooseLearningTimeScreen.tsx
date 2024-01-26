@@ -4,7 +4,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { useQuery } from "@tanstack/react-query";
 import BookingAPI from "../../services/BookingAPI";
 import type { Schedule } from "../../types/schedule";
-import { Button, Card, Icon, Modal, Portal } from "react-native-paper";
+import { Button, Card, Modal, Portal } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
 const ChooseLearningTimeScreen = ({ route }: any) => {
     const navigator = useNavigation();

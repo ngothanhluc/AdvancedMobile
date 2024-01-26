@@ -24,6 +24,18 @@ const BookingAPI = {
             console.log(error);
         }
     },
+    cancelBooking: async (bookingId: string) => {
+        try {
+            const response = await apiClient.delete(`/booking`, {
+                data: {
+                    scheduleDetailIds: [bookingId],
+                },
+            });
+            return response.data;
+        } catch (error) {
+            console.log(error);
+        }
+    },
 };
 
 export default BookingAPI;

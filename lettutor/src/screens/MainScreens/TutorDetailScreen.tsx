@@ -29,13 +29,14 @@ import SpecialtyTag from "../../components/SpecialtyTag";
 import COLORS from "../../constants/Colors";
 import TutorAPI from "../../services/TutorAPI";
 import type TutorDetails from "../../types/tutorDetails";
+import { useQueryClient } from "@tanstack/react-query";
 const TutorDetailScreen = ({ route }: any) => {
+    const queryClient = useQueryClient();
     const { tutorID } = route.params;
     const navigator = useNavigation();
     const { data: tutor, isLoading } = useQuery<TutorDetails>({
         queryKey: ["tutorDetail", tutorID],
         queryFn: () => TutorAPI.getTutorByID(tutorID),
-        staleTime: 0,
     });
     const [isFavorite, setIsFavorite] = useState(tutor?.isFavorite); // TODO: get from API
     const [rating, setRating] = useState(4);
@@ -57,6 +58,7 @@ const TutorDetailScreen = ({ route }: any) => {
     const handleFavoritePress = async () => {
         try {
             const response = await TutorAPI.addFavoriteTutor(tutorID);
+            queryClient.invalidateQueries("tutorDetail");
             if (response.result === 1) {
                 setIsFavorite(false);
             } else {
