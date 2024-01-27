@@ -29,6 +29,9 @@ const AllCourseScreen = () => {
         });
         setRawCoursesList(res.data);
     };
+
+    const onChangeSearch = (query) => setSearchQuery(query);
+
     const [rawCoursesList, setRawCoursesList] = React.useState<{
         count: number;
         rows: Course[];
@@ -42,16 +45,13 @@ const AllCourseScreen = () => {
         queryFn: () => CourseAPI.getCourses({ page, perPage }),
     });
 
-    const onChangeSearch = (query) => setSearchQuery(query);
-
-    if (isLoading) return <LoadingOverlay message="Loading..." />;
-
     const maxPage = rawCoursesList?.count
         ? Number(Math.ceil(rawCoursesList?.count / perPage))
         : 0;
     useEffect(() => {
-        setRawCoursesList(dataRawCoursesList);
-    }, []);
+        if (dataRawCoursesList?.rows) setRawCoursesList(dataRawCoursesList);
+    }, [dataRawCoursesList]);
+    if (isLoading) return <LoadingOverlay message="Loading..." />;
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
             <ScrollView style={{ padding: 20 }}>

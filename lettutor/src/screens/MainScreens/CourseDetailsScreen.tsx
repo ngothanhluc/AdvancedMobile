@@ -173,6 +173,7 @@ const CourseDetailsScreen = ({ route }: any) => {
                         <View style={{ gap: 16 }}>
                             {course?.topics.map((topic) => (
                                 <Pressable
+                                    key={topic.id}
                                     style={{
                                         paddingVertical: 10,
                                         paddingHorizontal: 20,

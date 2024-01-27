@@ -5,17 +5,24 @@
     "build": {
         "development": {
             "developmentClient": true,
-            "distribution": "internal"
+            "distribution": "internal",
+            "env": {
+                "EXPO_PUBLIC_BASE_URL": "https://sandbox.api.lettutor.com/"
+            }
         },
+
         "preview": {
             "android": {
                 "buildType": "apk"
             },
-            "distribution": "internal"
+            "distribution": "internal",
+            "env": {
+                "EXPO_PUBLIC_BASE_URL": "https://sandbox.api.lettutor.com/"
+            }
         },
         "production": {
             "env": {
-                "EXPO_PUBLIC_BASE_URL": "https://sandbox.api.lettutor.com/"
+                "EXPO_PUBLIC_BASE_URL": "https://api.app.lettutor.com/"
             }
         }
     },
